@@ -30,7 +30,7 @@ migrate_working_dir/
 .pub-cache/
 .pub/
 /build/
-
+android/app/google-services.json
 # Firebase options file - User added
 lib/firebase_options.dart
 
