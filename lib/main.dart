@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:t_store_admin_panel/app.dart';
+import 'package:t_store_admin_panel/data/repositories/authentication/authentication_repository.dart';
 import 'package:url_strategy/url_strategy.dart';
 import 'firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -15,8 +16,8 @@ Future<void> main() async {
   setPathUrlStrategy();
 
   // Initialize Firebase & Authentication Repository
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  // .then((_) => Get.put(AuthenticationRepository()));
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform)
+      .then((_) => Get.put(AuthenticationRepository()));
 
   // Main App Starts here...
   runApp(const TStoreAdminPanelApp());
