@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:t_store_admin_panel/app.dart';
 import 'package:t_store_admin_panel/data/repositories/authentication/authentication_repository.dart';
 import 'package:url_strategy/url_strategy.dart';
@@ -10,7 +11,9 @@ import 'package:firebase_core/firebase_core.dart';
 Future<void> main() async {
   // Ensure that widgets are initialized
   WidgetsFlutterBinding.ensureInitialized();
+
   // Initialize GetX Local Storage
+  await GetStorage.init();
 
   // Remove # sign from url
   setPathUrlStrategy();

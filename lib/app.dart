@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:t_store_admin_panel/bindings/general_bindings.dart';
 import 'package:t_store_admin_panel/routes/app_routes.dart';
 import 'package:t_store_admin_panel/routes/routes.dart';
 import 'package:t_store_admin_panel/utils/constants/text_strings.dart';
@@ -16,6 +17,7 @@ class TStoreAdminPanelApp extends StatelessWidget {
       themeMode: ThemeMode.light,
       theme: TAppTheme.lightTheme,
       darkTheme: TAppTheme.darkTheme,
+      initialBinding: GeneralBindings(),
       getPages: TAppRoutes.pages,
       initialRoute: TRoutes.dashboard,
       unknownRoute: GetPage(
