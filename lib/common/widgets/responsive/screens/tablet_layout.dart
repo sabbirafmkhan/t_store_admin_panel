@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:t_store_admin_panel/common/widgets/layouts/headers/header.dart';
+import 'package:t_store_admin_panel/common/widgets/layouts/sidebars/sidebar.dart';
 
 class TabletLayout extends StatelessWidget {
   TabletLayout({
@@ -14,7 +15,7 @@ class TabletLayout extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
-      drawer: const Drawer(),
+      drawer: const TSidebar(),
       appBar: THeader(
         scaffoldKey: scaffoldKey,
       ),
