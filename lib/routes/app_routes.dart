@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:t_store_admin_panel/features/screens/login/login.dart';
+import 'package:t_store_admin_panel/features/authentication/screens/login/login.dart';
 import 'package:t_store_admin_panel/routes/routes.dart';
 
 class TAppRoutes {
