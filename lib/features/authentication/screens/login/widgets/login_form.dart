@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:t_store_admin_panel/routes/routes.dart';
 import 'package:t_store_admin_panel/utils/constants/sizes.dart';
 import 'package:t_store_admin_panel/utils/constants/text_strings.dart';
 
@@ -51,7 +53,7 @@ class TLoginForm extends StatelessWidget {
                 ),
                 // Forget Password:
                 TextButton(
-                  onPressed: () {},
+                  onPressed: () => Get.toNamed(TRoutes.forgetPassword),
                   child: const Text(TTexts.forgetPassword),
                 )
               ],
