@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:t_store_admin_panel/common/widgets/images/t_rounded_image.dart';
+import 'package:t_store_admin_panel/common/widgets/shimmers/shimmer.dart';
+import 'package:t_store_admin_panel/features/authentication/controllers/user_controller.dart';
 import 'package:t_store_admin_panel/utils/constants/colors.dart';
 import 'package:t_store_admin_panel/utils/constants/enums.dart';
 import 'package:t_store_admin_panel/utils/constants/image_strings.dart';
@@ -19,6 +22,7 @@ class THeader extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = UserController.instance;
     return Container(
       decoration: const BoxDecoration(
         color: TColors.white,
@@ -72,30 +76,44 @@ class THeader extends StatelessWidget implements PreferredSizeWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               // Image:
-              const TRoundedImage(
-                width: 40,
-                height: 40,
-                padding: 2,
-                imageType: ImageType.asset,
-                image: TImages.user,
+              Obx(
+                () => TRoundedImage(
+                  width: 40,
+                  height: 40,
+                  padding: 2,
+                  imageType: controller.user.value.profilePicture.isNotEmpty
+                      ? ImageType.network
+                      : ImageType.asset,
+                  image: controller.user.value.profilePicture.isNotEmpty
+                      ? controller.user.value.profilePicture
+                      : TImages.user,
+                ),
               ),
               const SizedBox(width: TSizes.sm),
 
               // Name and Email:
               if (!TDeviceUtils.isMobileScreen(context))
-                Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'A F M Sabbir Khan',
-                      style: Theme.of(context).textTheme.titleLarge,
-                    ),
-                    Text(
-                      'Suport@CodingWithafmsk.com',
-                      style: Theme.of(context).textTheme.labelMedium,
-                    ),
-                  ],
+                Obx(
+                  () => Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // Name:
+                      controller.loading.value
+                          ? const TShimmerEffect(width: 50, height: 13)
+                          : Text(
+                              controller.user.value.fullName,
+                              style: Theme.of(context).textTheme.titleLarge,
+                            ),
+                      // Email:
+                      controller.loading.value
+                          ? const TShimmerEffect(width: 50, height: 13)
+                          : Text(
+                              controller.user.value.email,
+                              style: Theme.of(context).textTheme.labelMedium,
+                            ),
+                    ],
+                  ),
                 ),
             ],
           ),
