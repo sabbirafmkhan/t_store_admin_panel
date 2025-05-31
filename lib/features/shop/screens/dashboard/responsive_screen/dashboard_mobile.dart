@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:t_store_admin_panel/features/authentication/screens/dashboard/widgets/dashboard_card.dart';
+import 'package:t_store_admin_panel/features/shop/screens/dashboard/widgets/dashboard_card.dart';
 import 'package:t_store_admin_panel/utils/constants/sizes.dart';
 
 class DashboardMobileScreen extends StatelessWidget {

@@ -1,8 +1,8 @@
 import 'package:get/get.dart';
-import 'package:t_store_admin_panel/features/authentication/screens/dashboard/dashboard.dart';
 import 'package:t_store_admin_panel/features/authentication/screens/forget_password/forget_password.dart';
 import 'package:t_store_admin_panel/features/authentication/screens/login/login.dart';
 import 'package:t_store_admin_panel/features/authentication/screens/reset_password/reset_password.dart';
+import 'package:t_store_admin_panel/features/shop/screens/dashboard/dashboard.dart';
 import 'package:t_store_admin_panel/routes/routes.dart';
 import 'package:t_store_admin_panel/routes/routes_middleware.dart';
 
