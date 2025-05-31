@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:t_store_admin_panel/common/widgets/containers/rounded_container.dart';
 import 'package:t_store_admin_panel/features/shop/screens/dashboard/widgets/dashboard_card.dart';
+import 'package:t_store_admin_panel/features/shop/screens/dashboard/widgets/order_status_graph.dart';
+import 'package:t_store_admin_panel/features/shop/screens/dashboard/widgets/weekly_sales.dart';
 import 'package:t_store_admin_panel/utils/constants/sizes.dart';
 
 class DashboardTabletScreen extends StatelessWidget {
@@ -61,6 +64,18 @@ class DashboardTabletScreen extends StatelessWidget {
                   ),
                 ],
               ),
+              const SizedBox(height: TSizes.spaceBtwSections),
+
+              // Bar Graph
+              const TWeeklySalesGraph(),
+              const SizedBox(height: TSizes.spaceBtwSections),
+
+              // Orders:
+              const TRoundedContainer(),
+              const SizedBox(height: TSizes.spaceBtwSections),
+
+              // Pie Chart:
+              const OrderStatusPieChart(),
             ],
           ),
         ),

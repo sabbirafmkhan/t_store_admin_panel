@@ -8,6 +8,8 @@ class DashboardController extends GetxController {
 
   /// variables
   final RxList<double> weeklySales = <double>[].obs;
+  final RxMap<OrderStatus, int> orderStatusData = <OrderStatus, int>{}.obs;
+  final RxMap<OrderStatus, double> totalAmounts = <OrderStatus, double>{}.obs;
 
   /// Order
   static final List<OrderModel> orders = [
@@ -21,28 +23,28 @@ class DashboardController extends GetxController {
     OrderModel(
       id: 'CWT0002',
       status: OrderStatus.shipped,
-      totalAmount: 256,
+      totalAmount: 200,
       orderDate: DateTime(2025, 5, 20),
       deliveryDate: DateTime(2025, 6, 20),
     ),
     OrderModel(
       id: 'CWT0003',
       status: OrderStatus.delivered,
-      totalAmount: 256,
+      totalAmount: 369,
       orderDate: DateTime(2025, 5, 20),
       deliveryDate: DateTime(2025, 5, 30),
     ),
     OrderModel(
       id: 'CWT0004',
       status: OrderStatus.delivered,
-      totalAmount: 256,
+      totalAmount: 240,
       orderDate: DateTime(2025, 5, 20),
       deliveryDate: DateTime(2025, 5, 29),
     ),
     OrderModel(
       id: 'CWT0005',
       status: OrderStatus.delivered,
-      totalAmount: 256,
+      totalAmount: 135,
       orderDate: DateTime(2025, 5, 20),
       deliveryDate: DateTime(2025, 5, 31),
     ),
@@ -51,6 +53,7 @@ class DashboardController extends GetxController {
   @override
   void onInit() {
     _calculateWeeklySales();
+    _calculateOrderStatusData();
     super.onInit();
   }
 
@@ -72,6 +75,42 @@ class DashboardController extends GetxController {
 
         weeklySales[index] += order.totalAmount;
       }
+    }
+  }
+
+  // calculate Order Status Data:
+  void _calculateOrderStatusData() {
+    // Reset status data:
+    orderStatusData.clear();
+
+    // Map to store total amounts for each status:
+    totalAmounts.value = {for (var status in OrderStatus.values) status: 0.0};
+
+    for (var order in orders) {
+      // count orders:
+      final status = order.status;
+      orderStatusData[status] = (orderStatusData[status] ?? 0) + 1;
+
+      // Calculate total amounts for each status:
+      totalAmounts[status] = (totalAmounts[status] ?? 0) + order.totalAmount;
+    }
+  }
+
+  // Display status name:
+  String getDisplayStatusName(OrderStatus status) {
+    switch (status) {
+      case OrderStatus.pending:
+        return 'Pending';
+      case OrderStatus.processing:
+        return 'Processing';
+      case OrderStatus.shipped:
+        return 'Shipped';
+      case OrderStatus.delivered:
+        return 'Delivered';
+      case OrderStatus.cancelled:
+        return 'Cancelled';
+      default:
+        return 'Unknown';
     }
   }
 }
