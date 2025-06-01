@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:t_store_admin_panel/common/widgets/containers/rounded_container.dart';
 import 'package:t_store_admin_panel/features/shop/controller/dashboard/dashboard_controller.dart';
+import 'package:t_store_admin_panel/features/shop/screens/dashboard/table/data_table.dart';
 import 'package:t_store_admin_panel/features/shop/screens/dashboard/widgets/dashboard_card.dart';
 import 'package:t_store_admin_panel/features/shop/screens/dashboard/widgets/order_status_graph.dart';
 import 'package:t_store_admin_panel/features/shop/screens/dashboard/widgets/weekly_sales.dart';
@@ -66,7 +67,7 @@ class DashboardDesktopScreen extends StatelessWidget {
               const SizedBox(height: TSizes.spaceBtwSections),
 
               /// Graphs:
-              const Row(
+              Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Expanded(
@@ -74,18 +75,31 @@ class DashboardDesktopScreen extends StatelessWidget {
                     child: Column(
                       children: [
                         // bar graph
-                        TWeeklySalesGraph(),
-                        SizedBox(height: TSizes.spaceBtwSections),
+                        const TWeeklySalesGraph(),
+                        const SizedBox(height: TSizes.spaceBtwSections),
 
                         // Orders:
-                        TRoundedContainer(),
+                        TRoundedContainer(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Recent Orders',
+                                style:
+                                    Theme.of(context).textTheme.headlineSmall,
+                              ),
+                              const SizedBox(height: TSizes.spaceBtwSections),
+                              const DashboardOrderTable(),
+                            ],
+                          ),
+                        ),
                       ],
                     ),
                   ),
-                  SizedBox(width: TSizes.spaceBtwSections),
+                  const SizedBox(width: TSizes.spaceBtwSections),
 
                   // Pie Chart:
-                  Expanded(child: OrderStatusPieChart()),
+                  const Expanded(child: OrderStatusPieChart()),
                 ],
               ),
             ],
