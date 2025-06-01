@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:t_store_admin_panel/features/authentication/screens/forget_password/forget_password.dart';
 import 'package:t_store_admin_panel/features/authentication/screens/login/login.dart';
 import 'package:t_store_admin_panel/features/authentication/screens/reset_password/reset_password.dart';
+import 'package:t_store_admin_panel/features/media/screens/media/media.dart';
 import 'package:t_store_admin_panel/features/shop/screens/dashboard/dashboard.dart';
 import 'package:t_store_admin_panel/routes/routes.dart';
 import 'package:t_store_admin_panel/routes/routes_middleware.dart';
@@ -18,10 +19,10 @@ class TAppRoutes {
         name: TRoutes.dashboard,
         page: () => const DashboardScreen(),
         middlewares: [TRouteMiddleware()]),
-    // GetPage(
-    //     name: TRoutes.media,
-    //     page: () => const MediaScreen(),
-    //     middlewares: [TRouteMiddleware()]),
+    GetPage(
+        name: TRoutes.media,
+        page: () => const MediaScreen(),
+        middlewares: [TRouteMiddleware()]),
     //
     // // Banners:
     // GetPage(
