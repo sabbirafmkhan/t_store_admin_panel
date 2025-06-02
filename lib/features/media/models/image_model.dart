@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -5,7 +6,7 @@ import 'package:get/get.dart';
 import 'package:t_store_admin_panel/utils/formatters/formatter.dart';
 
 class ImageModel {
-  late String id;
+  String id;
   final String url;
   final String folder;
   final int? sizeBytes;
@@ -17,7 +18,7 @@ class ImageModel {
   final String? contentType;
 
   // Not Mapped
-  final Object? file; // <-- Accepts File, DropzoneFileInterface, or null
+  final File? file; // <-- Accepts File, DropzoneFileInterface, or null
   final RxBool isSelected = false.obs;
   final Uint8List? localImageToDisplay;
 
@@ -79,8 +80,12 @@ class ImageModel {
     }
   }
 
-  factory ImageModel.fromFirebaseMetadata(FullMetadata metadata, String folder,
-      String filename, String downloadUrl) {
+  factory ImageModel.fromFirebaseMetadata(
+    FullMetadata metadata,
+    String folder,
+    String filename,
+    String downloadUrl,
+  ) {
     return ImageModel(
       url: downloadUrl,
       folder: folder,
