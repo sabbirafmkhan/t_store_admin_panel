@@ -18,8 +18,8 @@ class ImageModel {
   final String? contentType;
 
   // Not Mapped
-  final File? file; // <-- Accepts File, DropzoneFileInterface, or null
-  final RxBool isSelected = false.obs;
+  final File? file;
+  RxBool isSelected = false.obs;
   final Uint8List? localImageToDisplay;
 
   /// Constructor for ImageModel.
@@ -38,12 +38,14 @@ class ImageModel {
     this.mediaCategory = '',
   });
 
+  /// Static function to create an empty user model.
   static ImageModel empty() => ImageModel(url: '', folder: '', filename: '');
 
   String get createdAtFormatted => TFormatter.formatDate(createdAt);
 
   String get updatedAtFormatted => TFormatter.formatDate(updatedAt);
 
+  /// Convert to Json to Store in DB
   Map<String, dynamic> toJson() {
     return {
       'url': url,
@@ -57,10 +59,13 @@ class ImageModel {
     };
   }
 
+  /// Convert Firestore Json and Map on Model
   factory ImageModel.fromSnapshot(
       DocumentSnapshot<Map<String, dynamic>> document) {
     if (document.data() != null) {
       final data = document.data()!;
+
+      // Map JSON Record to the Model
       return ImageModel(
         id: document.id,
         url: data['url'] ?? '',

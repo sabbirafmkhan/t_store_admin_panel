@@ -122,4 +122,23 @@ class MediaRepository extends GetxController {
       throw e.toString();
     }
   }
+
+  /// Delete file from firebase storage and corresponding document from Firestore:
+  Future<void> deleteFileFromStorage(ImageModel image) async {
+    try {
+      await FirebaseStorage.instance.ref(image.fullPath).delete();
+      await FirebaseFirestore.instance
+          .collection('Images')
+          .doc(image.id)
+          .delete();
+    } on FirebaseException catch (e) {
+      throw e.message ?? 'Something went wrong while deleting image';
+    } on SocketException catch (e) {
+      throw e.message;
+    } on PlatformException catch (e) {
+      throw e.message!;
+    } catch (e) {
+      throw e.toString();
+    }
+  }
 }
