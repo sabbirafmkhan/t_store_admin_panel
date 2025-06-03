@@ -1,10 +1,14 @@
 class TRoutes {
+  // Sidebar Menu items list:
   static List sidebarMenuItems = [
     dashboard,
     media,
     categories,
     brands,
     banners,
+    products,
+    customers,
+    orders
   ];
 
   static const login = '/login';
@@ -34,6 +38,9 @@ class TRoutes {
   static const customerDetails = '/customerDetails';
 
   static const orders = '/orders';
-  static const createOrder = '/createOrder';
-  static const customerOrder = '/customerOrder';
+  static const orderDetails = '/orderDetails';
+
+  static const coupons = '/coupons';
+  static const settings = '/settings';
+  static const profile = '/profile';
 }
