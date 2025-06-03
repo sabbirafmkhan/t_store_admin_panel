@@ -4,6 +4,7 @@ class TRoutes {
     media,
     categories,
     brands,
+    banners,
   ];
 
   static const login = '/login';
