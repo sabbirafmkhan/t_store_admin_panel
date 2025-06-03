@@ -3,6 +3,7 @@ class TRoutes {
     dashboard,
     media,
     categories,
+    brands,
   ];
 
   static const login = '/login';
@@ -15,6 +16,10 @@ class TRoutes {
   static const createCategory = '/createCategory';
   static const editCategory = '/editCategory';
 
+  static const brands = '/brands';
+  static const createBrand = '/createBrand';
+  static const editBrand = '/editBrand';
+
   static const banners = '/banners';
   static const createBanner = '/createBanner';
   static const editBanner = '/editBanner';
@@ -22,10 +27,6 @@ class TRoutes {
   static const products = '/products';
   static const createProduct = '/createProduct';
   static const editProduct = '/editProduct';
-
-  static const brands = '/brands';
-  static const createBrand = '/createBrand';
-  static const editBrand = '/editBrand';
 
   static const customers = '/customers';
   static const createCustomer = '/createCustomer';

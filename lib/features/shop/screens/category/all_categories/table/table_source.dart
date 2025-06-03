@@ -41,7 +41,7 @@ class CategoryRows extends DataTableSource {
               ), // Expanded
             ],
           ), // Row
-        ), // DataCell
+        ),
 
         const DataCell(Text('Parent')),
         const DataCell(Icon(Iconsax.heart5, color: TColors.primary)),
