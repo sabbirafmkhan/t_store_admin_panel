@@ -29,8 +29,8 @@ class ProductImagesController extends GetxController {
   void selectMultipleProductImages() async {
     final controller = Get.put(MediaController());
     final selectedImages = await controller.selectImagesFromMedia(
-      multipleSelection: true,
-      selectedUrls: additionalProductImagesUrls,
+      allowMultipleSelection: true,
+      alreadySelectedUrls: additionalProductImagesUrls,
     );
 
     // Handle the selected images

@@ -54,7 +54,7 @@ class MediaRepository extends GetxController {
   }
 
   /// Upload Image data in Firestore
-  Future<String> uploadImageFileInDataBase(ImageModel image) async {
+  Future<String> uploadImageFileInDatabase(ImageModel image) async {
     try {
       final data = await FirebaseFirestore.instance
           .collection("Images")

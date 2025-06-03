@@ -52,7 +52,7 @@ class MediaContent extends StatelessWidget {
                     onChanged: (MediaCategory? newValue) {
                       if (newValue != null) {
                         controller.selectedPath.value = newValue;
-                        controller.getMediaImage();
+                        controller.getMediaImages();
                       }
                     },
                   ),
