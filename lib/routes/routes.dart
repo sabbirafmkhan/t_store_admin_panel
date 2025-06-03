@@ -2,6 +2,7 @@ class TRoutes {
   static List sidebarMenuItems = [
     dashboard,
     media,
+    categories,
   ];
 
   static const login = '/login';
@@ -10,6 +11,10 @@ class TRoutes {
   static const dashboard = '/dashboard';
   static const media = '/media';
 
+  static const categories = '/categories';
+  static const createCategory = '/createCategory';
+  static const editCategory = '/editCategory';
+
   static const banners = '/banners';
   static const createBanner = '/createBanner';
   static const editBanner = '/editBanner';
@@ -17,10 +22,6 @@ class TRoutes {
   static const products = '/products';
   static const createProduct = '/createProduct';
   static const editProduct = '/editProduct';
-
-  static const categories = '/categories';
-  static const createCategory = '/createCategory';
-  static const editCategory = '/editCategory';
 
   static const brands = '/brands';
   static const createBrand = '/createBrand';
