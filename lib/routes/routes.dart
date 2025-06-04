@@ -8,7 +8,9 @@ class TRoutes {
     banners,
     products,
     customers,
-    orders
+    orders,
+    settings,
+    profile,
   ];
 
   static const login = '/login';
