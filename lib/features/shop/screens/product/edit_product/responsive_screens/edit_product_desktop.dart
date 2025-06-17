@@ -17,8 +17,15 @@ import 'package:t_store_admin_panel/routes/routes.dart';
 import 'package:t_store_admin_panel/utils/constants/sizes.dart';
 import 'package:t_store_admin_panel/utils/device/device_utility.dart';
 
-class CreateProductDesktopScreen extends StatelessWidget {
-  const CreateProductDesktopScreen({super.key});
+import 'package:t_store_admin_panel/features/shop/models/product_model.dart';
+
+class EditProductDesktopScreen extends StatelessWidget {
+  const EditProductDesktopScreen({
+    super.key,
+    required this.product,
+  });
+
+  final ProductModel product;
 
   @override
   Widget build(BuildContext context) {
@@ -33,8 +40,8 @@ class CreateProductDesktopScreen extends StatelessWidget {
               // Breadcrumbs:
               const TBreadcrumbWithHeading(
                 returnToPreviousScreen: true,
-                heading: 'Create Product',
-                breadcrumbItems: [TRoutes.products, 'Create Product'],
+                heading: 'Edit Product',
+                breadcrumbItems: [TRoutes.products, 'Edit Product'],
               ),
               const SizedBox(height: TSizes.spaceBtwSections),
 

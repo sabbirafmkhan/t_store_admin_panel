@@ -71,6 +71,7 @@ class TAppRoutes {
       page: () => const EditBrandScreen(),
       middlewares: [TRouteMiddleware()],
     ),
+
     // Banners:
     GetPage(
       name: TRoutes.banners,
@@ -87,20 +88,23 @@ class TAppRoutes {
       page: () => const EditBannerScreen(),
       middlewares: [TRouteMiddleware()],
     ),
-    //
+
     // Products
     GetPage(
-        name: TRoutes.products,
-        page: () => const ProductsScreen(),
-        middlewares: [TRouteMiddleware()]),
+      name: TRoutes.products,
+      page: () => const ProductsScreen(),
+      middlewares: [TRouteMiddleware()],
+    ),
     GetPage(
-        name: TRoutes.createProduct,
-        page: () => const CreateProductScreen(),
-        middlewares: [TRouteMiddleware()]),
+      name: TRoutes.createProduct,
+      page: () => const CreateProductScreen(),
+      middlewares: [TRouteMiddleware()],
+    ),
     GetPage(
-        name: TRoutes.editProduct,
-        page: () => const EditProductScreen(),
-        middlewares: [TRouteMiddleware()]),
+      name: TRoutes.editProduct,
+      page: () => const EditProductScreen(),
+      middlewares: [TRouteMiddleware()],
+    ),
 
     //
     // // Customers

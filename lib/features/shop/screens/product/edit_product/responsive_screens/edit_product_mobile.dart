@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:t_store_admin_panel/common/widgets/breadcrumbs/breadcrumb_with_heading.dart';
 import 'package:t_store_admin_panel/common/widgets/containers/rounded_container.dart';
 import 'package:t_store_admin_panel/features/shop/controller/product/product_images_controller.dart';
+import 'package:t_store_admin_panel/features/shop/models/product_model.dart';
 import 'package:t_store_admin_panel/features/shop/screens/product/create_product/widget/product_additional_images.dart';
 import 'package:t_store_admin_panel/features/shop/screens/product/create_product/widget/product_attributes.dart';
 import 'package:t_store_admin_panel/features/shop/screens/product/create_product/widget/product_bottom_navigation_buttons.dart';
@@ -17,8 +18,12 @@ import 'package:t_store_admin_panel/features/shop/screens/product/create_product
 import 'package:t_store_admin_panel/routes/routes.dart';
 import 'package:t_store_admin_panel/utils/constants/sizes.dart';
 
-class CreateProductMobileScreen extends StatelessWidget {
-  const CreateProductMobileScreen({super.key});
+class EditProductMobileScreen extends StatelessWidget {
+  const EditProductMobileScreen({
+    super.key,
+    required this.product,
+  });
+  final ProductModel product;
 
   @override
   Widget build(BuildContext context) {
@@ -34,8 +39,8 @@ class CreateProductMobileScreen extends StatelessWidget {
               // Breadcrumbs:
               const TBreadcrumbWithHeading(
                 returnToPreviousScreen: true,
-                heading: 'Create Product',
-                breadcrumbItems: [TRoutes.products, 'Create Product'],
+                heading: 'Edit Product',
+                breadcrumbItems: [TRoutes.products, 'Edit Product'],
               ),
               const SizedBox(height: TSizes.spaceBtwSections),
 
