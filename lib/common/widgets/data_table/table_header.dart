@@ -6,16 +6,18 @@ class TTableHeader extends StatelessWidget {
   const TTableHeader({
     super.key,
     this.onPressed,
-    required this.buttonText,
+    this.buttonText = 'Add',
     this.searchController,
     this.searchOnChanged,
+    this.showLeftWidget = true,
   });
 
-  final Function()? onPressed;
   final String buttonText;
+  final Function()? onPressed;
 
-  final TextEditingController? searchController;
+  final bool showLeftWidget;
   final Function(String)? searchOnChanged;
+  final TextEditingController? searchController;
 
   @override
   Widget build(BuildContext context) {
@@ -23,17 +25,19 @@ class TTableHeader extends StatelessWidget {
       children: [
         Expanded(
           flex: TDeviceUtils.isDesktopScreen(context) ? 3 : 1,
-          child: Row(
-            children: [
-              SizedBox(
-                width: 200,
-                child: ElevatedButton(
-                  onPressed: onPressed,
-                  child: Text(buttonText),
-                ),
-              ),
-            ],
-          ),
+          child: showLeftWidget
+              ? Row(
+                  children: [
+                    SizedBox(
+                      width: 200,
+                      child: ElevatedButton(
+                        onPressed: onPressed,
+                        child: Text(buttonText),
+                      ),
+                    ),
+                  ],
+                )
+              : const SizedBox.shrink(),
         ),
         Expanded(
           flex: TDeviceUtils.isDesktopScreen(context) ? 2 : 1,
