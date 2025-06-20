@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:t_store_admin_panel/common/widgets/breadcrumbs/breadcrumb_with_heading.dart';
 import 'package:t_store_admin_panel/features/shop/models/order_model.dart';
+import 'package:t_store_admin_panel/features/shop/screens/order/orders_detail/widgets/customer_info.dart';
 import 'package:t_store_admin_panel/features/shop/screens/order/orders_detail/widgets/order_info.dart';
+import 'package:t_store_admin_panel/features/shop/screens/order/orders_detail/widgets/order_items.dart';
+import 'package:t_store_admin_panel/features/shop/screens/order/orders_detail/widgets/order_transaction.dart';
 import 'package:t_store_admin_panel/routes/routes.dart';
 import 'package:t_store_admin_panel/utils/constants/sizes.dart';
 
@@ -41,20 +44,22 @@ class OrdersDetailDesktopScreen extends StatelessWidget {
                         const SizedBox(height: TSizes.spaceBtwSections),
 
                         // Items
-
+                        OrderItems(order: order),
                         const SizedBox(height: TSizes.spaceBtwSections),
 
                         // Transactions
+                        OrderTransaction(order: order),
                       ],
                     ),
                   ),
-                  const SizedBox(height: TSizes.spaceBtwSections),
+                  const SizedBox(width: TSizes.spaceBtwSections),
 
                   // Right Side Order Orders
                   Expanded(
                     child: Column(
                       children: [
                         // Customer Info
+                        OrderCustomer(order: order),
                         const SizedBox(height: TSizes.spaceBtwSections),
                       ],
                     ),

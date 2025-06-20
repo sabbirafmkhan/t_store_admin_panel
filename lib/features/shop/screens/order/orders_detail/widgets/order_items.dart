@@ -7,6 +7,7 @@ import 'package:t_store_admin_panel/utils/constants/enums.dart';
 import 'package:t_store_admin_panel/utils/constants/image_strings.dart';
 import 'package:t_store_admin_panel/utils/constants/sizes.dart';
 import 'package:t_store_admin_panel/utils/device/device_utility.dart';
+import 'package:t_store_admin_panel/utils/helpers/pricing_calculator.dart';
 
 class OrderItems extends StatelessWidget {
   const OrderItems({super.key, required this.order});
@@ -93,6 +94,73 @@ class OrderItems extends StatelessWidget {
                 ],
               );
             },
+          ),
+          const SizedBox(height: TSizes.spaceBtwSections),
+
+          // Items Total
+          TRoundedContainer(
+            padding: const EdgeInsets.all(TSizes.defaultSpace),
+            backgroundColor: TColors.primaryBackground,
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text('Subtotal',
+                        style: Theme.of(context).textTheme.titleLarge),
+                    Text('\$$subTotal',
+                        style: Theme.of(context).textTheme.titleLarge),
+                  ],
+                ),
+                const SizedBox(height: TSizes.spaceBtwItems),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text('Discount',
+                        style: Theme.of(context).textTheme.titleLarge),
+                    Text('\$0.00',
+                        style: Theme.of(context).textTheme.titleLarge),
+                  ],
+                ),
+                const SizedBox(height: TSizes.spaceBtwItems),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text('Shipping',
+                        style: Theme.of(context).textTheme.titleLarge),
+                    Text(
+                      '\$${TPricingCalculator.calculateShippingCost(subTotal, '')}',
+                      style: Theme.of(context).textTheme.titleLarge,
+                    ),
+                  ],
+                ),
+                const SizedBox(height: TSizes.spaceBtwItems),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text('Tax', style: Theme.of(context).textTheme.titleLarge),
+                    Text(
+                      '\$${TPricingCalculator.calculateTax(subTotal, '')}',
+                      style: Theme.of(context).textTheme.titleLarge,
+                    ),
+                  ],
+                ),
+                const SizedBox(height: TSizes.spaceBtwItems),
+                const Divider(),
+                const SizedBox(height: TSizes.spaceBtwItems),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text('Total',
+                        style: Theme.of(context).textTheme.titleLarge),
+                    Text(
+                      '\$${TPricingCalculator.calculateTotalPrice(subTotal, '')}',
+                      style: Theme.of(context).textTheme.titleLarge,
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ],
       ),
