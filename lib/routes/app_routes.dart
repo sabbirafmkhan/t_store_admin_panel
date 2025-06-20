@@ -15,6 +15,8 @@ import 'package:t_store_admin_panel/features/shop/screens/category/edit_category
 import 'package:t_store_admin_panel/features/shop/screens/customer/all_customers/customers.dart';
 import 'package:t_store_admin_panel/features/shop/screens/customer/customer_details/customer_details.dart';
 import 'package:t_store_admin_panel/features/shop/screens/dashboard/dashboard.dart';
+import 'package:t_store_admin_panel/features/shop/screens/order/all_order/orders.dart';
+import 'package:t_store_admin_panel/features/shop/screens/order/orders_detail/order_detail.dart';
 import 'package:t_store_admin_panel/features/shop/screens/product/all_product/products.dart';
 import 'package:t_store_admin_panel/features/shop/screens/product/create_product/create_product.dart';
 import 'package:t_store_admin_panel/features/shop/screens/product/edit_product/edit_product.dart';
@@ -120,18 +122,16 @@ class TAppRoutes {
       middlewares: [TRouteMiddleware()],
     ),
 
-    // // Orders
-    // GetPage(
-    //     name: TRoutes.orders,
-    //     page: () => const OrdersScreen(),
-    //     middlewares: [TRouteMiddleware()]),
-    // GetPage(
-    //     name: TRoutes.createOrder,
-    //     page: () => const CreateOrderScreen(),
-    //     middlewares: [TRouteMiddleware()]),
-    // GetPage(
-    //     name: TRoutes.customerOrder,
-    //     page: () => const CustomerOrderScreen(),
-    //     middlewares: [TRouteMiddleware()]),
+    // Orders
+    GetPage(
+      name: TRoutes.orders,
+      page: () => const OrdersScreen(),
+      middlewares: [TRouteMiddleware()],
+    ),
+    GetPage(
+      name: TRoutes.orderDetails,
+      page: () => const OrderDetailScreen(),
+      middlewares: [TRouteMiddleware()],
+    ),
   ];
 }

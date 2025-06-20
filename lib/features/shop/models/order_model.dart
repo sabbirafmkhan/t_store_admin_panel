@@ -1,4 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:t_store_admin_panel/features/shop/models/address_model.dart';
+import 'package:t_store_admin_panel/features/shop/models/cart_Item_model.dart';
 import 'package:t_store_admin_panel/utils/constants/enums.dart';
 import 'package:t_store_admin_panel/utils/helpers/helper_functions.dart';
 
@@ -9,19 +11,19 @@ class OrderModel {
   final double totalAmount;
   final DateTime orderDate;
   final String paymentMethod;
-  // final AddressModel? address;
+  final AddressModel? address;
   final DateTime? deliveryDate;
-  // final List<CartItemModel> items;
+  final List<CartItemModel> items;
 
   OrderModel({
     required this.id,
     this.userId = '',
     required this.status,
-    // required this.items,
+    this.items = const [],
     required this.totalAmount,
     required this.orderDate,
     this.paymentMethod = 'Paypal',
-    // this.address,
+    this.address,
     this.deliveryDate,
   });
 
@@ -45,11 +47,11 @@ class OrderModel {
       'totalAmount': totalAmount,
       'orderDate': orderDate,
       'paymentMethod': paymentMethod,
-      // 'address': address?.toJson(), // Convert AddressModel to map
+      'address': address?.toJson(), // Convert AddressModel to map
       'deliveryDate': deliveryDate,
-      // 'items': items
-      //     .map((item) => item.toJson())
-      //     .toList(), // Convert CartItemModel to map
+      'items': items
+          .map((item) => item.toJson())
+          .toList(), // Convert CartItemModel to map
     };
   }
 
@@ -63,14 +65,14 @@ class OrderModel {
       totalAmount: data['totalAmount'] as double,
       orderDate: (data['orderDate'] as Timestamp).toDate(),
       paymentMethod: data['paymentMethod'] as String,
-      // address: AddressModel.fromMap(data['address'] as Map<String, dynamic>),
+      address: AddressModel.fromMap(data['address'] as Map<String, dynamic>),
       deliveryDate: data['deliveryDate'] == null
           ? null
           : (data['deliveryDate'] as Timestamp).toDate(),
-      // items: (data['items'] as List<dynamic>)
-      //     .map((itemData) =>
-      //     CartItemModel.fromJson(itemData as Map<String, dynamic>))
-      //     .toList(),
+      items: (data['items'] as List<dynamic>)
+          .map((itemData) =>
+              CartItemModel.fromJson(itemData as Map<String, dynamic>))
+          .toList(),
     ); // OrderModel
   }
 }

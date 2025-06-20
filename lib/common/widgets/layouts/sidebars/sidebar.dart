@@ -84,7 +84,7 @@ class TSidebar extends StatelessWidget {
                     ),
                     const TMenuItem(
                       route: TRoutes.orders,
-                      icon: Iconsax.menu_board,
+                      icon: Iconsax.box,
                       itemName: 'Orders',
                     ),
                     const TMenuItem(
