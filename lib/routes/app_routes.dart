@@ -3,6 +3,8 @@ import 'package:t_store_admin_panel/features/authentication/screens/forget_passw
 import 'package:t_store_admin_panel/features/authentication/screens/login/login.dart';
 import 'package:t_store_admin_panel/features/authentication/screens/reset_password/reset_password.dart';
 import 'package:t_store_admin_panel/features/media/screens/media/media.dart';
+import 'package:t_store_admin_panel/features/personalization/screens/profile/profile.dart';
+import 'package:t_store_admin_panel/features/personalization/screens/settings/settings.dart';
 import 'package:t_store_admin_panel/features/shop/screens/banner/all_banners/banners.dart';
 import 'package:t_store_admin_panel/features/shop/screens/banner/create_banner/create_banner.dart';
 import 'package:t_store_admin_panel/features/shop/screens/banner/edit_banner/edit_banner.dart';
@@ -131,6 +133,20 @@ class TAppRoutes {
     GetPage(
       name: TRoutes.orderDetails,
       page: () => const OrderDetailScreen(),
+      middlewares: [TRouteMiddleware()],
+    ),
+
+    // settings
+    GetPage(
+      name: TRoutes.settings,
+      page: () => const SettingsScreen(),
+      middlewares: [TRouteMiddleware()],
+    ),
+
+    // profile
+    GetPage(
+      name: TRoutes.profile,
+      page: () => const ProfileScreen(),
       middlewares: [TRouteMiddleware()],
     ),
   ];
