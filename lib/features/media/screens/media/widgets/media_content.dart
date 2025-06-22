@@ -39,6 +39,7 @@ class MediaContent extends StatelessWidget {
         children: [
           // Media images header
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Row(
                 children: [
