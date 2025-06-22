@@ -33,7 +33,7 @@ class CategoryRows extends DataTableSource {
                 imageType: ImageType.network,
                 borderRadius: TSizes.borderRadiusMd,
                 backgroundColor: TColors.primaryBackground,
-              ), // TRoundedImage
+              ),
               const SizedBox(width: TSizes.spaceBtwItems),
               Expanded(
                 child: Text(
@@ -44,12 +44,11 @@ class CategoryRows extends DataTableSource {
                       .apply(color: TColors.primary),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
-                ), // Text
-              ), // Expanded
+                ),
+              ),
             ],
-          ), // Row
+          ),
         ),
-
         DataCell(Text(parentCategory != null ? parentCategory.name : '')),
         DataCell(
           category.isFeatured
@@ -59,14 +58,16 @@ class CategoryRows extends DataTableSource {
                 )
               : const Icon(Iconsax.heart),
         ),
-        DataCell(Text(DateTime.now().toString())),
+        DataCell(
+          Text(category.createdAt == null ? '' : category.formattedDate),
+        ),
         DataCell(
           TTableActionButtons(
             onEditPressed: () =>
-                Get.toNamed(TRoutes.editCategory, arguments: 'category'),
+                Get.toNamed(TRoutes.editCategory, arguments: category),
             onDeletePressed: () {},
-          ), // TTableActionButtons
-        ), // DataCell
+          ),
+        ),
       ],
     );
   }
@@ -75,7 +76,7 @@ class CategoryRows extends DataTableSource {
   bool get isRowCountApproximate => false;
 
   @override
-  int get rowCount => 5;
+  int get rowCount => controller.filteredItems.length;
 
   @override
   int get selectedRowCount => 0;

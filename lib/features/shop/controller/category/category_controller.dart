@@ -1,3 +1,4 @@
+import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:t_store_admin_panel/data/repositories/category/category_repository.dart';
 import 'package:t_store_admin_panel/features/shop/models/category_model.dart';
@@ -9,6 +10,10 @@ class CategoryController extends GetxController {
   RxBool isLoading = true.obs;
   RxList<CategoryModel> allItems = <CategoryModel>[].obs;
   RxList<CategoryModel> filteredItems = <CategoryModel>[].obs;
+
+  // Sorting
+  RxInt sortColumnIndex = 1.obs;
+  RxBool sortAscending = true.obs;
 
   final _categoryRepository = Get.put(CategoryRepository());
 
@@ -35,4 +40,21 @@ class CategoryController extends GetxController {
       TLoaders.errorSnackBar(title: 'Oh Snap!', message: e.toString());
     }
   }
+
+  void sortByName(int columnIndex, bool ascending) {
+    sortColumnIndex.value = columnIndex;
+    sortAscending.value = ascending;
+
+    filteredItems.sort(
+      (a, b) {
+        if (ascending) {
+          return a.name.toLowerCase().compareTo(b.name.toLowerCase());
+        } else {
+          return b.name.toLowerCase().compareTo(a.name.toLowerCase());
+        }
+      },
+    );
+  }
+
+  void sortParentByName(int columnIndex, bool ascending) {}
 }
