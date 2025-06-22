@@ -5,14 +5,18 @@ class CategoryModel {
   String name;
   String image;
   String parentId;
-  bool? isFeatured;
+  bool isFeatured;
+  DateTime? createdAt;
+  DateTime? updatedAt;
 
   CategoryModel({
     required this.id,
     required this.name,
     required this.image,
-    this.isFeatured,
+    this.isFeatured = false,
     this.parentId = '',
+    this.createdAt,
+    this.updatedAt,
   });
 
   /// Empty Helper Function:
@@ -20,17 +24,18 @@ class CategoryModel {
         id: '',
         name: '',
         image: '',
-        parentId: '',
         isFeatured: false,
       );
 
   /// Convert model to Json structure so that you can store data in Firebase:
-  Map<String, dynamic> toJson() {
+  toJson() {
     return {
       'Name': name,
       'Image': image,
       'ParentId': parentId,
       'IsFeatured': isFeatured,
+      'CreatedAt': createdAt,
+      'UpdatedAt': updatedAt = DateTime.now(),
     };
   }
 
@@ -47,6 +52,10 @@ class CategoryModel {
         image: data['Image'] ?? '',
         parentId: data['ParentId'] ?? '',
         isFeatured: data['IsFeatured'] ?? false,
+        createdAt:
+            data.containsKey('CreatedAt') ? data['CreatedAt']?.toDate() : null,
+        updatedAt:
+            data.containsKey('UpdatedAt') ? data['UpdatedAt']?.toDate() : null,
       );
     } else {
       return CategoryModel.empty();

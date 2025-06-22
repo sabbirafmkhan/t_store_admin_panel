@@ -18,22 +18,12 @@ class ImageAndMeta extends StatelessWidget {
         vertical: TSizes.lg,
         horizontal: TSizes.md,
       ),
-      // The TRoundedContainer is a custom widget. Ensure its internal
-      // implementation passes finite constraints to its child if necessary,
-      // or allows its child to size itself.
-      // Assuming TRoundedContainer correctly wraps its child.
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          // The key fix is here:
-          // Wrap the Column in Flexible or provide it with mainAxisSize.min.
-          // Since the children of this Column (TImageUploader, Text) have
-          // intrinsic heights, letting the Column take minimum space is ideal.
           Column(
-            mainAxisSize:
-                MainAxisSize.min, // This is the crucial line for the fix
+            mainAxisSize: MainAxisSize.min,
             children: [
-              // User Image - already has explicit width and height, which is good.
               const TImageUploader(
                 right: 10,
                 bottom: 20,
@@ -49,7 +39,6 @@ class ImageAndMeta extends StatelessWidget {
               Text(
                 'Coding with T',
                 style: Theme.of(context).textTheme.headlineLarge,
-                // Consider adding textAlign for better responsiveness
                 textAlign: TextAlign.center,
               ),
               const Text(
