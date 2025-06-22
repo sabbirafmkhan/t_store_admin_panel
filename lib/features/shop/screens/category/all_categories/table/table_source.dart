@@ -8,7 +8,6 @@ import 'package:t_store_admin_panel/features/shop/controller/category/category_c
 import 'package:t_store_admin_panel/routes/routes.dart';
 import 'package:t_store_admin_panel/utils/constants/colors.dart';
 import 'package:t_store_admin_panel/utils/constants/enums.dart';
-import 'package:t_store_admin_panel/utils/constants/image_strings.dart';
 import 'package:t_store_admin_panel/utils/constants/sizes.dart';
 
 class CategoryRows extends DataTableSource {
@@ -21,6 +20,9 @@ class CategoryRows extends DataTableSource {
         .firstWhereOrNull((item) => item.id == category.parentId);
 
     return DataRow2(
+      selected: controller.selectedRows[index],
+      onSelectChanged: (value) =>
+          controller.selectedRows[index] = value ?? false,
       cells: [
         DataCell(
           Row(
@@ -65,7 +67,7 @@ class CategoryRows extends DataTableSource {
           TTableActionButtons(
             onEditPressed: () =>
                 Get.toNamed(TRoutes.editCategory, arguments: category),
-            onDeletePressed: () {},
+            onDeletePressed: () => controller.confirmAndDeleteItem(category),
           ),
         ),
       ],

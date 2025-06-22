@@ -1,7 +1,9 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:t_store_admin_panel/data/repositories/category/category_repository.dart';
 import 'package:t_store_admin_panel/features/shop/models/category_model.dart';
+import 'package:t_store_admin_panel/utils/constants/sizes.dart';
+import 'package:t_store_admin_panel/utils/popups/full_screen_loader.dart';
 import 'package:t_store_admin_panel/utils/popups/loaders.dart';
 
 class CategoryController extends GetxController {
@@ -10,6 +12,7 @@ class CategoryController extends GetxController {
   RxBool isLoading = true.obs;
   RxList<CategoryModel> allItems = <CategoryModel>[].obs;
   RxList<CategoryModel> filteredItems = <CategoryModel>[].obs;
+  RxList<bool> selectedRows = <bool>[].obs;
 
   // Sorting
   RxInt sortColumnIndex = 1.obs;
@@ -35,6 +38,7 @@ class CategoryController extends GetxController {
 
       allItems.assignAll(fetchedItems);
       filteredItems.assignAll(allItems);
+      selectedRows.assignAll(List.generate(allItems.length, (_) => false));
 
       isLoading.value = false;
     } catch (e) {
@@ -79,5 +83,72 @@ class CategoryController extends GetxController {
         (item) => item.name.toLowerCase().contains(query.toLowerCase()),
       ),
     );
+  }
+
+  confirmAndDeleteItem(CategoryModel category) {
+    // Show a Confirmation dialog
+    Get.defaultDialog(
+      title: 'Delete Item',
+      content: const Text('Are you sure you want to delete this item'),
+      confirm: SizedBox(
+        width: 60,
+        child: ElevatedButton(
+          onPressed: () async => await deleteOnConfirm(category),
+          style: OutlinedButton.styleFrom(
+            padding:
+                const EdgeInsets.symmetric(vertical: TSizes.buttonHeight / 2),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(TSizes.buttonRadius * 5),
+            ),
+          ),
+          child: const Text('Ok'),
+        ),
+      ),
+      cancel: SizedBox(
+        width: 80,
+        child: OutlinedButton(
+          onPressed: () => Get.back(),
+          style: OutlinedButton.styleFrom(
+            padding:
+                const EdgeInsets.symmetric(vertical: TSizes.buttonHeight / 2),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(TSizes.buttonRadius * 5),
+            ),
+          ),
+          child: const Text("Cancel"),
+        ),
+      ),
+    );
+  }
+
+  deleteOnConfirm(CategoryModel category) async {
+    try {
+      // Remove the confirmation Dialog
+      TFullScreenLoader.stopLoading();
+
+      // Start the loader
+      TFullScreenLoader.popUpCircular();
+
+      // Delete Firestore Data
+      await _categoryRepository.deleteCategory(category.id);
+
+      removeItemFromLists(category);
+
+      TFullScreenLoader.stopLoading();
+      TLoaders.successSnackBar(
+        title: 'Item Deleted',
+        message: 'Your item has been Deleted',
+      );
+    } catch (e) {
+      isLoading.value = false;
+      TLoaders.errorSnackBar(title: 'Oh Snap!', message: e.toString());
+    }
+  }
+
+  // Method for removing an item from the lists
+  void removeItemFromLists(CategoryModel item) {
+    allItems.remove(item);
+    filteredItems.remove(item);
+    selectedRows.assignAll(List.generate(allItems.length, (index) => false));
   }
 }

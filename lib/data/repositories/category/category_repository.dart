@@ -26,4 +26,17 @@ class CategoryRepository extends GetxController {
       throw 'Something went wrong. Please try again';
     }
   }
+
+  // Delete an existing category document from the 'Categories' collection
+  Future<void> deleteCategory(String categoryId) async {
+    try {
+      await _db.collection('Categories').doc(categoryId).delete();
+    } on FirebaseException catch (e) {
+      throw TFirebaseException(e.code).message;
+    } on PlatformException catch (e) {
+      throw TPlatformException(e.code).message;
+    } catch (e) {
+      throw 'Something went wrong. Please try again';
+    }
+  }
 }
