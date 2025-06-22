@@ -1,4 +1,4 @@
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:t_store_admin_panel/data/repositories/category/category_repository.dart';
 import 'package:t_store_admin_panel/features/shop/models/category_model.dart';
@@ -14,6 +14,8 @@ class CategoryController extends GetxController {
   // Sorting
   RxInt sortColumnIndex = 1.obs;
   RxBool sortAscending = true.obs;
+
+  final searchTextController = TextEditingController();
 
   final _categoryRepository = Get.put(CategoryRepository());
 
@@ -56,5 +58,26 @@ class CategoryController extends GetxController {
     );
   }
 
-  void sortParentByName(int columnIndex, bool ascending) {}
+  void sortParentByName(int columnIndex, bool ascending) {
+    sortColumnIndex.value = columnIndex;
+    sortAscending.value = ascending;
+
+    filteredItems.sort(
+      (a, b) {
+        if (ascending) {
+          return a.name.toLowerCase().compareTo(b.name.toLowerCase());
+        } else {
+          return b.name.toLowerCase().compareTo(a.name.toLowerCase());
+        }
+      },
+    );
+  }
+
+  searchQuery(String query) {
+    filteredItems.assignAll(
+      allItems.where(
+        (item) => item.name.toLowerCase().contains(query.toLowerCase()),
+      ),
+    );
+  }
 }
