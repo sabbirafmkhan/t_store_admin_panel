@@ -54,7 +54,7 @@ class CreateCategoryController extends GetxController {
           await CategoryRepository.instance.createCategory(newRecord);
 
       // Update all data list
-      CategoryController.instance.addItemToLists(newRecord);
+      CategoryController.instance.addIemToLists(newRecord);
 
       // Reset Form
       resetFields();

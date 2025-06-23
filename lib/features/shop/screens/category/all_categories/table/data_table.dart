@@ -28,13 +28,7 @@ class CategoryTable extends StatelessWidget {
                 ascending,
               ),
             ),
-            DataColumn2(
-              label: const Text('Parent Category'),
-              onSort: (columnIndex, ascending) => controller.sortParentByName(
-                columnIndex,
-                ascending,
-              ),
-            ),
+            const DataColumn2(label: Text('Parent Category')),
             const DataColumn2(label: Text('Featured')),
             const DataColumn2(label: Text('Date')),
             const DataColumn2(label: Text('Action'), fixedWidth: 100),
