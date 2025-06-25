@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:t_store_admin_panel/common/widgets/breadcrumbs/breadcrumb_with_heading.dart';
 import 'package:t_store_admin_panel/common/widgets/containers/rounded_container.dart';
 import 'package:t_store_admin_panel/common/widgets/data_table/table_header.dart';
+import 'package:t_store_admin_panel/common/widgets/loaders/loader_animation.dart';
+import 'package:t_store_admin_panel/features/shop/controller/brand/brand_controller.dart';
 import 'package:t_store_admin_panel/features/shop/screens/brand/all_brands/table/data_table.dart';
 import 'package:t_store_admin_panel/routes/routes.dart';
 import 'package:t_store_admin_panel/utils/constants/sizes.dart';
@@ -12,6 +14,8 @@ class BrandsMobileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(BrandController());
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
@@ -39,7 +43,15 @@ class BrandsMobileScreen extends StatelessWidget {
                     const SizedBox(height: TSizes.spaceBtwItems),
 
                     // Table:
-                    const BrandTable(),
+                    Obx(
+                      () {
+                        // show loader
+                        if (controller.isLoading.value) {
+                          return const TLoaderAnimation();
+                        }
+                        return const BrandTable();
+                      },
+                    ),
                   ],
                 ),
               )

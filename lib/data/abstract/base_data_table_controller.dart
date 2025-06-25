@@ -110,8 +110,8 @@ abstract class TBaseController<T> extends GetxController {
                 borderRadius: BorderRadius.circular(TSizes.buttonRadius * 5)),
           ),
           child: const Text('Ok'),
-        ), // ElevatedButton
-      ), // SizedBox
+        ),
+      ),
       cancel: SizedBox(
         width: 80,
         child: OutlinedButton(
@@ -123,8 +123,8 @@ abstract class TBaseController<T> extends GetxController {
                 borderRadius: BorderRadius.circular(TSizes.buttonRadius * 5)),
           ),
           child: const Text('Cancel'),
-        ), // OutlinedButton
-      ), // SizedBox
+        ),
+      ),
     );
   }
 
