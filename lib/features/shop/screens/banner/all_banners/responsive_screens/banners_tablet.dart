@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:t_store_admin_panel/common/widgets/breadcrumbs/breadcrumb_with_heading.dart';
 import 'package:t_store_admin_panel/common/widgets/containers/rounded_container.dart';
 import 'package:t_store_admin_panel/common/widgets/data_table/table_header.dart';
+import 'package:t_store_admin_panel/common/widgets/loaders/loader_animation.dart';
+import 'package:t_store_admin_panel/features/shop/controller/banner/banner_controller.dart';
 import 'package:t_store_admin_panel/features/shop/screens/banner/all_banners/table/data_table.dart';
 import 'package:t_store_admin_panel/routes/routes.dart';
 import 'package:t_store_admin_panel/utils/constants/sizes.dart';
@@ -12,6 +14,7 @@ class BannersTabletScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(BannerController());
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
@@ -21,28 +24,39 @@ class BannersTabletScreen extends StatelessWidget {
             children: [
               // Breadcrumbs
               const TBreadcrumbWithHeading(
-                  heading: 'Banners', breadcrumbItems: ['Banners']),
+                heading: 'Banners',
+                breadcrumbItems: ['Banners'],
+              ),
               const SizedBox(height: TSizes.spaceBtwSections),
 
-              TRoundedContainer(
-                child: Column(
-                  children: [
-                    // Table Header
-                    TTableHeader(
-                      buttonText: 'Create New Banner',
-                      onPressed: () => Get.toNamed(TRoutes.createBanner),
-                    ),
-                    const SizedBox(height: TSizes.spaceBtwItems),
+              // table body
+              Obx(
+                () {
+                  // show loader
+                  if (controller.isLoading.value) {
+                    return const TLoaderAnimation();
+                  }
+                  return TRoundedContainer(
+                    child: Column(
+                      children: [
+                        // Table Header
+                        TTableHeader(
+                          buttonText: 'Create New Banner',
+                          onPressed: () => Get.toNamed(TRoutes.createBanner),
+                        ),
+                        const SizedBox(height: TSizes.spaceBtwItems),
 
-                    // Table
-                    const BannersTable(),
-                  ],
-                ), // Column
-              ), // TRoundedContainer
+                        // Table
+                        const BannersTable(),
+                      ],
+                    ),
+                  );
+                },
+              ),
             ],
-          ), // Column
-        ), // Padding
-      ), // SingleChildScrollView
-    ); // Scaffold
+          ),
+        ),
+      ),
+    );
   }
 }
