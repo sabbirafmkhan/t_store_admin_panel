@@ -207,23 +207,38 @@ class MediaController extends GetxController {
       // Using a reverse loop to avoid 'Concurrent modification during iteration' error
       for (int i = selectedImagesToUpload.length - 1; i >= 0; i--) {
         var selectedImage = selectedImagesToUpload[i];
+        try {
+          if (selectedImage.localImageToDisplay == null ||
+              selectedImage.contentType == null) {
+            throw Exception("Missing image data for upload.");
+          }
 
-        // Upload Image to the Storage
-        final ImageModel uploadedImage =
-            await mediaRepository.uploadImageFileInStorage(
-          fileData: selectedImage.localImageToDisplay!,
-          mimeType: selectedImage.contentType!,
-          path: getSelectedPath(),
-          imageName: selectedImage.filename,
-        );
+          // Upload Image to the Storage
+          final ImageModel uploadedImage =
+              await mediaRepository.uploadImageFileInStorage(
+            fileData: selectedImage.localImageToDisplay!,
+            mimeType: selectedImage.contentType!,
+            path: getSelectedPath(),
+            imageName: selectedImage.filename,
+          );
 
-        // Upload Image to the Firestore
-        uploadedImage.mediaCategory = selectedCategory.name;
-        final id =
-            await mediaRepository.uploadImageFileInDatabase(uploadedImage);
-        uploadedImage.id = id;
-        selectedImagesToUpload.removeAt(i);
-        targetList.add(uploadedImage);
+          // Upload Image to the Firestore
+          uploadedImage.mediaCategory = selectedCategory.name;
+          final id =
+              await mediaRepository.uploadImageFileInDatabase(uploadedImage);
+          uploadedImage.id = id;
+          selectedImagesToUpload.removeAt(i);
+          targetList.add(uploadedImage);
+        } catch (e) {
+          // Optionally: delete uploaded file from storage if Firestore fails
+          // await mediaRepository.deleteFileFromStorageByPath(getSelectedPath(), selectedImage.filename);
+
+          TLoaders.warningSnackBar(
+            title: 'Error Uploading Image',
+            message: 'Failed to upload ${selectedImage.filename}: $e',
+          );
+          continue; // Continue to next image
+        }
       }
 
       // Stop Loader after successful upload

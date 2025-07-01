@@ -19,6 +19,13 @@ class MediaRepository extends GetxController {
     required String path,
     required String imageName,
   }) async {
+    // Input validation
+    if (fileData.isEmpty ||
+        mimeType.isEmpty ||
+        path.isEmpty ||
+        imageName.isEmpty) {
+      throw Exception("Missing required upload parameters.");
+    }
     try {
       // Reference to the storage location
       final Reference ref = _storage.ref('$path/$imageName');
@@ -28,7 +35,7 @@ class MediaRepository extends GetxController {
           ref.putData(fileData, SettableMetadata(contentType: mimeType));
 
       // Wait for the upload to complete
-      final TaskSnapshot snapshot = await uploadTask.whenComplete(() => {});
+      final TaskSnapshot snapshot = await uploadTask.whenComplete(() {});
 
       // Get download URL
       final String downloadURL = await snapshot.ref.getDownloadURL();
@@ -43,13 +50,13 @@ class MediaRepository extends GetxController {
         downloadURL,
       );
     } on FirebaseException catch (e) {
-      throw e.message!;
+      rethrow; // preserve stack trace
     } on SocketException catch (e) {
-      throw e.message;
+      rethrow;
     } on PlatformException catch (e) {
-      throw e.message!;
+      rethrow;
     } catch (e) {
-      throw e.toString();
+      rethrow;
     }
   }
 

@@ -45,8 +45,8 @@ class BrandController extends TBaseController<BrandModel> {
   }
 
   @override
-  Future<void> deleteItem(BrandModel item) {
-    throw UnimplementedError();
+  Future<void> deleteItem(BrandModel item) async {
+    await _brandRepository.deleteBrand(item);
   }
 
   void sortByName(int sortColumnIndex, bool ascending) {
