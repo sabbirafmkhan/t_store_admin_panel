@@ -49,18 +49,18 @@ class MediaRepository extends GetxController {
         imageName,
         downloadURL,
       );
-    } on FirebaseException catch (e) {
+    } on FirebaseException {
       rethrow; // preserve stack trace
-    } on SocketException catch (e) {
+    } on SocketException {
       rethrow;
-    } on PlatformException catch (e) {
+    } on PlatformException {
       rethrow;
     } catch (e) {
       rethrow;
     }
   }
 
-  /// Upload Image data in Firestore
+  // Upload Image data in Firestore
   Future<String> uploadImageFileInDatabase(ImageModel image) async {
     try {
       final data = await FirebaseFirestore.instance

@@ -49,7 +49,7 @@ class ProductModel {
   static ProductModel empty() => ProductModel(
       id: '', title: '', stock: 0, price: 0, thumbnail: '', productType: '');
 
-  /// Json Format
+  // Json Format
   toJson() {
     return {
       'SKU': sku,
@@ -77,39 +77,30 @@ class ProductModel {
   /// Map Json oriented document snapshot from Firebase to Model
   factory ProductModel.fromSnapshot(
       DocumentSnapshot<Map<String, dynamic>> document) {
-    try {
-      final data = document.data()!;
-      final rawAttrs = data['ProductAttributes'] as List<dynamic>? ?? [];
-      final rawVars = data['ProductVariations'] as List<dynamic>? ?? [];
-
-      return ProductModel(
-          id: document.id,
-          title: data['Title'] ?? '',
-          price: double.parse((data['Price'] ?? 0.0).toString()),
-          sku: data['SKU'] ?? '',
-          stock: data['Stock'] ?? 0,
-          soldQuantity:
-              data.containsKey('SoldQuantity') ? data['SoldQuantity'] ?? 0 : 0,
-          isFeatured: data['IsFeatured'] ?? false,
-          salePrice: double.parse((data['SalePrice'] ?? 0.0).toString()),
-          thumbnail: data['Thumbnail'] ?? '',
-          categoryId: data['CategoryId'] ?? '',
-          description: data['Description'] ?? '',
-          productType: data['ProductType'] ?? '',
-          brand: BrandModel.fromJson(data['Brand']),
-          images:
-              data['Images'] != null ? List<String>.from(data['Images']) : [],
-          productAttributes: rawAttrs
-              .map((e) => ProductAttributeModel.fromJson(
-                  e ?? {} as Map<String, dynamic>))
-              .toList(),
-          productVariations: rawVars
-              .map((e) => ProductVariationModel.fromJson(
-                  e ?? {} as Map<String, dynamic>?))
-              .toList());
-    } catch (e) {
-      return ProductModel.empty();
-    }
+    final data = document.data()!;
+    return ProductModel(
+      id: document.id,
+      title: data['Title'],
+      price: double.parse((data['Price'] ?? 0.0).toString()),
+      sku: data['SKU'],
+      stock: data['Stock'] ?? 0,
+      soldQuantity:
+          data.containsKey('SoldQuantity') ? data['SoldQuantity'] ?? 0 : 0,
+      isFeatured: data['IsFeatured'] ?? false,
+      salePrice: double.parse((data['SalePrice'] ?? 0.0).toString()),
+      thumbnail: data['Thumbnail'] ?? '',
+      categoryId: data['CategoryId'] ?? '',
+      description: data['Description'] ?? '',
+      productType: data['ProductType'] ?? '',
+      brand: BrandModel.fromJson(data['Brand']),
+      images: data['Images'] != null ? List<String>.from(data['Images']) : [],
+      productAttributes: (data['ProductAttributes'] as List<dynamic>)
+          .map((e) => ProductAttributeModel.fromJson(e))
+          .toList(),
+      productVariations: (data['ProductVariations'] as List<dynamic>)
+          .map((e) => ProductVariationModel.fromJson(e))
+          .toList(),
+    );
   }
 
   // Map Json-oriented document snapshot from Firebase to Model
@@ -118,9 +109,9 @@ class ProductModel {
     final data = document.data() as Map<String, dynamic>;
     return ProductModel(
       id: document.id,
-      title: data['Title'] ?? '',
+      title: data['Title'],
       price: double.parse((data['Price'] ?? 0.0).toString()),
-      sku: data['SKU'] ?? '',
+      sku: data['SKU'],
       stock: data['Stock'] ?? 0,
       soldQuantity:
           data.containsKey('SoldQuantity') ? data['SoldQuantity'] ?? 0 : 0,

@@ -9,7 +9,7 @@ class ProductAttributeModel {
     return {'Name': name, 'Values': values};
   }
 
-  /// Map Json oriented document snapshot from firebase to model:
+  /// Map Json oriented document snapshot from Firebase to Model
   factory ProductAttributeModel.fromJson(Map<String, dynamic> document) {
     final data = document;
 
