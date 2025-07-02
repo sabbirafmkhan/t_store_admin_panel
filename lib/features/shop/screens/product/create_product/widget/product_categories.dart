@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 import 'package:t_store_admin_panel/common/widgets/containers/rounded_container.dart';
-import 'package:t_store_admin_panel/features/shop/models/category_model.dart';
+import 'package:t_store_admin_panel/common/widgets/shimmers/shimmer.dart';
+import 'package:t_store_admin_panel/features/shop/controller/category/category_controller.dart';
+import 'package:t_store_admin_panel/features/shop/controller/product/create_product_controller.dart';
 import 'package:t_store_admin_panel/utils/constants/sizes.dart';
 
 class ProductCategories extends StatelessWidget {
@@ -9,31 +12,39 @@ class ProductCategories extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final categoriesController = Get.put(CategoryController());
+
+    // Fetch categories if the list is empty
+    if (categoriesController.allItems.isEmpty) {
+      categoriesController.fetchItems();
+    }
+
     return TRoundedContainer(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // Categories label
-          Text('Categories', style: Theme.of(context).textTheme.headlineSmall),
+          Text('Categories', style: Theme.of(context).textTheme.headlineSmall!),
           const SizedBox(height: TSizes.spaceBtwItems),
 
           // MultiSelectDialogField for selecting categories
-          MultiSelectDialogField(
-            buttonText: const Text("Select Categories"),
-            title: const Text("Categories"),
-            items: [
-              MultiSelectItem(
-                CategoryModel(id: 'id', name: 'Shoes', image: 'image'),
-                'Shoes',
-              ),
-              MultiSelectItem(
-                CategoryModel(id: 'id', name: 'Shirts', image: 'image'),
-                'Shirts',
-              ),
-            ],
-            listType: MultiSelectListType.CHIP,
-            onConfirm: (values) {},
-          ),
+          Obx(
+            () => categoriesController.isLoading.value
+                ? const TShimmerEffect(width: double.infinity, height: 50)
+                : MultiSelectDialogField(
+                    buttonText: const Text('Select Categories'),
+                    title: const Text('Categories'),
+                    items: categoriesController.allItems
+                        .map((category) =>
+                            MultiSelectItem(category, category.name))
+                        .toList(),
+                    listType: MultiSelectListType.CHIP,
+                    onConfirm: (values) {
+                      CreateProductController.instance.selectedCategories
+                          .assignAll(values);
+                    },
+                  ),
+          ), // Obx
         ],
       ),
     );

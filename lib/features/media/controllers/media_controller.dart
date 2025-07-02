@@ -380,6 +380,8 @@ class MediaController extends GetxController {
     List<String>? alreadySelectedUrls,
     bool allowSelection = true,
     bool allowMultipleSelection = false,
+    RxList<String>? selectedUrls,
+    bool multipleSelection = false,
   }) async {
     showImagesUploaderSection.value = true;
     List<ImageModel>? selectedImages = await Get.bottomSheet<List<ImageModel>>(

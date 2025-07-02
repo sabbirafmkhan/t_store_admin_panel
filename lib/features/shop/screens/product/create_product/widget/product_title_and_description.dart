@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:t_store_admin_panel/common/widgets/containers/rounded_container.dart';
+import 'package:t_store_admin_panel/features/shop/controller/product/create_product_controller.dart';
 import 'package:t_store_admin_panel/utils/constants/sizes.dart';
 import 'package:t_store_admin_panel/utils/validators/validation.dart';
 
@@ -8,8 +10,11 @@ class ProductTitleAndDescription extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(CreateProductController());
+
     return TRoundedContainer(
       child: Form(
+        key: controller.titleDescriptionFormKey,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -22,6 +27,7 @@ class ProductTitleAndDescription extends StatelessWidget {
 
             // Product Title Input Field:
             TextFormField(
+              controller: controller.title,
               validator: (value) =>
                   TValidator.validateEmptyText('Product Title', value),
               decoration: const InputDecoration(labelText: 'Product Title'),
@@ -35,6 +41,7 @@ class ProductTitleAndDescription extends StatelessWidget {
                 expands: true,
                 maxLines: null,
                 textAlign: TextAlign.start,
+                controller: controller.description,
                 keyboardType: TextInputType.multiline,
                 textAlignVertical: TextAlignVertical.top,
                 validator: (value) =>
