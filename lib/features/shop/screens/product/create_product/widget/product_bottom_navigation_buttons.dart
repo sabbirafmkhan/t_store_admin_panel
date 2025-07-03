@@ -3,8 +3,10 @@ import 'package:t_store_admin_panel/common/widgets/containers/rounded_container.
 import 'package:t_store_admin_panel/features/shop/controller/product/create_product_controller.dart';
 import 'package:t_store_admin_panel/utils/constants/sizes.dart';
 
-class ProductBottomNavigationButtons extends StatelessWidget {
-  const ProductBottomNavigationButtons({super.key});
+class CreateProductBottomNavigationButtons extends StatelessWidget {
+  const CreateProductBottomNavigationButtons({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {

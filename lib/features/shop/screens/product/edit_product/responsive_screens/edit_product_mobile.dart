@@ -6,7 +6,6 @@ import 'package:t_store_admin_panel/features/shop/controller/product/product_ima
 import 'package:t_store_admin_panel/features/shop/models/product_model.dart';
 import 'package:t_store_admin_panel/features/shop/screens/product/create_product/widget/product_additional_images.dart';
 import 'package:t_store_admin_panel/features/shop/screens/product/create_product/widget/product_attributes.dart';
-import 'package:t_store_admin_panel/features/shop/screens/product/create_product/widget/product_bottom_navigation_buttons.dart';
 import 'package:t_store_admin_panel/features/shop/screens/product/create_product/widget/product_brand.dart';
 import 'package:t_store_admin_panel/features/shop/screens/product/create_product/widget/product_categories.dart';
 import 'package:t_store_admin_panel/features/shop/screens/product/create_product/widget/product_stock_and_pricing.dart';
@@ -15,6 +14,7 @@ import 'package:t_store_admin_panel/features/shop/screens/product/create_product
 import 'package:t_store_admin_panel/features/shop/screens/product/create_product/widget/product_type_widget.dart';
 import 'package:t_store_admin_panel/features/shop/screens/product/create_product/widget/product_variation.dart';
 import 'package:t_store_admin_panel/features/shop/screens/product/create_product/widget/product_visibility_widget.dart';
+import 'package:t_store_admin_panel/features/shop/screens/product/edit_product/widget/product_bottom_navigation_buttons.dart';
 import 'package:t_store_admin_panel/routes/routes.dart';
 import 'package:t_store_admin_panel/utils/constants/sizes.dart';
 
@@ -29,7 +29,7 @@ class EditProductMobileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.put(ProductImagesController());
     return Scaffold(
-      bottomNavigationBar: const ProductBottomNavigationButtons(),
+      bottomNavigationBar: EditProductBottomNavigationButtons(product: product),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(TSizes.defaultSpace),

@@ -196,7 +196,39 @@ class CreateProductController extends GetxController {
     categoriesRelationshipUploader.value = false;
   }
 
-// Build a checkbox widget
+  // Show the progress dialog
+  void showProgressDialog() {
+    showDialog(
+      context: Get.context!,
+      barrierDismissible: false,
+      builder: (context) => PopScope(
+        canPop: false,
+        child: AlertDialog(
+          title: const Text('Creating Product'),
+          content: Obx(
+            () => Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Image.asset(TImages.creatingProductIllustration,
+                    height: 200, width: 200),
+                const SizedBox(height: TSizes.spaceBtwItems),
+                buildCheckbox('Thumbnail Image', thumbnailUploader),
+                buildCheckbox('Additional Images', additionalImagesUploader),
+                buildCheckbox('Product Data, Attributes & Variations',
+                    productDataUploader),
+                buildCheckbox(
+                    'Product Categories', categoriesRelationshipUploader),
+                const SizedBox(height: TSizes.spaceBtwItems),
+                const Text('Sit Tight, Your product is uploading...'),
+              ],
+            ),
+          ), // Obx
+        ), // AlertDialog
+      ), // PopScope
+    );
+  }
+
+  // Build a checkbox widget
   Widget buildCheckbox(String label, RxBool value) {
     return Row(
       children: [

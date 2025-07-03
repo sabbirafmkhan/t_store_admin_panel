@@ -24,7 +24,7 @@ class CreateProductMobileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.put(ProductImagesController());
     return Scaffold(
-      bottomNavigationBar: const ProductBottomNavigationButtons(),
+      bottomNavigationBar: const CreateProductBottomNavigationButtons(),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(TSizes.defaultSpace),

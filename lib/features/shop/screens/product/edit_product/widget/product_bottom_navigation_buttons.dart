@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:t_store_admin_panel/common/widgets/containers/rounded_container.dart';
+import 'package:t_store_admin_panel/features/shop/controller/product/edit_product_controller.dart';
+import 'package:t_store_admin_panel/features/shop/models/product_model.dart';
 import 'package:t_store_admin_panel/utils/constants/sizes.dart';
 
-class ProductBottomNavigationButtons extends StatelessWidget {
-  const ProductBottomNavigationButtons({super.key});
+class EditProductBottomNavigationButtons extends StatelessWidget {
+  const EditProductBottomNavigationButtons({super.key, required this.product});
+
+  final ProductModel product;
 
   @override
   Widget build(BuildContext context) {
@@ -12,14 +16,20 @@ class ProductBottomNavigationButtons extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           // Discard button
-          OutlinedButton(onPressed: () {}, child: const Text('Discard')),
+          OutlinedButton(
+            onPressed: () {
+              // Add functionality to discard changes if needed
+            },
+            child: const Text('Discard'),
+          ),
           const SizedBox(width: TSizes.spaceBtwItems / 2),
 
           // Save Changes button
           SizedBox(
             width: 160,
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: () =>
+                  EditProductController.instance.editProduct(product),
               child: const Text('Save Changes'),
             ),
           ),
