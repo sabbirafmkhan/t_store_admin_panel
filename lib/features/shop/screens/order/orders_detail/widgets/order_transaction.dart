@@ -16,7 +16,7 @@ class OrderTransaction extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TRoundedContainer(
-      padding: EdgeInsets.all(TSizes.defaultSpace),
+      padding: const EdgeInsets.all(TSizes.defaultSpace),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

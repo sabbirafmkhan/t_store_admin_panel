@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:t_store_admin_panel/common/widgets/containers/rounded_container.dart';
 import 'package:t_store_admin_panel/common/widgets/images/t_rounded_image.dart';
+import 'package:t_store_admin_panel/data/repositories/order/order_details_controller.dart';
 import 'package:t_store_admin_panel/features/shop/models/order_model.dart';
 import 'package:t_store_admin_panel/utils/constants/colors.dart';
 import 'package:t_store_admin_panel/utils/constants/enums.dart';
@@ -14,6 +16,10 @@ class OrderCustomer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(OrderDetailController());
+    controller.order.value = order;
+    controller.getCustomerOfCurrentOrder();
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -28,37 +34,84 @@ class OrderCustomer extends StatelessWidget {
                 style: Theme.of(context).textTheme.headlineMedium,
               ),
               const SizedBox(height: TSizes.spaceBtwSections),
-              Row(
+              Obx(
+                () {
+                  return Row(
+                    children: [
+                      TRoundedImage(
+                        padding: 0,
+                        backgroundColor: TColors.primaryBackground,
+                        image:
+                            controller.customer.value.profilePicture.isNotEmpty
+                                ? controller.customer.value.profilePicture
+                                : TImages.user,
+                        imageType:
+                            controller.customer.value.profilePicture.isNotEmpty
+                                ? ImageType.network
+                                : ImageType.asset,
+                      ),
+                      const SizedBox(width: TSizes.spaceBtwItems),
+                      Expanded(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              controller.customer.value.fullName,
+                              style: Theme.of(context).textTheme.titleLarge,
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
+                            ),
+                            Text(
+                              controller.customer.value.email,
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  );
+                },
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: TSizes.spaceBtwSections),
+
+        // contact info
+        Obx(
+          () => SizedBox(
+            width: double.infinity,
+            child: TRoundedContainer(
+              padding: const EdgeInsets.all(TSizes.defaultSpace),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const TRoundedImage(
-                    padding: 0,
-                    backgroundColor: TColors.primaryBackground,
-                    image: TImages.user,
-                    imageType: ImageType.asset,
+                  Text(
+                    'Contact Person',
+                    style: Theme.of(context).textTheme.headlineMedium,
                   ),
-                  const SizedBox(width: TSizes.spaceBtwItems),
-                  Expanded(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Coding with T',
-                          style: Theme.of(context).textTheme.titleLarge,
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 1,
-                        ),
-                        const Text(
-                          'support@codingwitht.com',
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 1,
-                        ),
-                      ],
-                    ),
+                  const SizedBox(height: TSizes.spaceBtwSections),
+                  Text(
+                    controller.customer.value.fullName,
+                    style: Theme.of(context).textTheme.titleSmall,
+                  ),
+                  const SizedBox(height: TSizes.spaceBtwItems / 2),
+                  Text(
+                    controller.customer.value.email,
+                    style: Theme.of(context).textTheme.titleSmall,
+                  ),
+                  const SizedBox(height: TSizes.spaceBtwItems / 2),
+                  Text(
+                    controller.customer.value.formattedPhoneNo.isNotEmpty
+                        ? controller.customer.value.formattedPhoneNo
+                        : '(+1) *** ****',
+                    style: Theme.of(context).textTheme.titleSmall,
                   ),
                 ],
               ),
-            ],
+            ),
           ),
         ),
         const SizedBox(height: TSizes.spaceBtwSections),
@@ -71,24 +124,31 @@ class OrderCustomer extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Contact Person',
-                    style: Theme.of(context).textTheme.headlineMedium),
+                Text(
+                  'Shipping Address',
+                  style: Theme.of(context).textTheme.headlineMedium,
+                ),
                 const SizedBox(height: TSizes.spaceBtwSections),
-                Text('Coding with T',
-                    style: Theme.of(context).textTheme.titleSmall),
+                Text(
+                  order.shippingAddress != null
+                      ? order.shippingAddress!.name
+                      : '',
+                  style: Theme.of(context).textTheme.titleSmall,
+                ),
                 const SizedBox(height: TSizes.spaceBtwItems / 2),
-                Text('support@codingwitht.com',
-                    style: Theme.of(context).textTheme.titleSmall),
-                const SizedBox(height: TSizes.spaceBtwItems / 2),
-                Text('+(44) **** ****',
-                    style: Theme.of(context).textTheme.titleSmall),
+                Text(
+                  order.shippingAddress != null
+                      ? order.shippingAddress!.toString()
+                      : '',
+                  style: Theme.of(context).textTheme.titleSmall,
+                ),
               ],
             ),
           ),
         ),
         const SizedBox(height: TSizes.spaceBtwSections),
 
-        // contact info
+        // Contact Info: Adjust this address as per your needs
         SizedBox(
           width: double.infinity,
           child: TRoundedContainer(
@@ -96,36 +156,24 @@ class OrderCustomer extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Shipping Address',
-                    style: Theme.of(context).textTheme.headlineMedium),
+                Text(
+                  'Billing Address',
+                  style: Theme.of(context).textTheme.headlineMedium,
+                ),
                 const SizedBox(height: TSizes.spaceBtwSections),
-                Text('Taimoor Sikander LTD',
-                    style: Theme.of(context).textTheme.titleSmall),
+                Text(
+                  order.billingAddressSameAsShipping
+                      ? order.shippingAddress!.name
+                      : order.billingAddress!.name,
+                  style: Theme.of(context).textTheme.titleSmall,
+                ),
                 const SizedBox(height: TSizes.spaceBtwItems / 2),
-                Text('61 Bridge Street, Kingston, United Kingdom',
-                    style: Theme.of(context).textTheme.titleSmall),
-              ],
-            ),
-          ),
-        ),
-        const SizedBox(height: TSizes.spaceBtwSections),
-
-        // contact info : adjust this address as per needs
-        SizedBox(
-          width: double.infinity,
-          child: TRoundedContainer(
-            padding: const EdgeInsets.all(TSizes.defaultSpace),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text('Billing Address',
-                    style: Theme.of(context).textTheme.headlineMedium),
-                const SizedBox(height: TSizes.spaceBtwSections),
-                Text('Taimoor Sikander LTD',
-                    style: Theme.of(context).textTheme.titleSmall),
-                const SizedBox(height: TSizes.spaceBtwItems / 2),
-                Text('61 Bridge Street, Kingston, United Kingdom',
-                    style: Theme.of(context).textTheme.titleSmall),
+                Text(
+                  order.billingAddressSameAsShipping
+                      ? order.shippingAddress!.toString()
+                      : order.billingAddress!.toString(),
+                  style: Theme.of(context).textTheme.titleSmall,
+                ),
               ],
             ),
           ),

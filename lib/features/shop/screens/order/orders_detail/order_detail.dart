@@ -9,6 +9,7 @@ class OrderDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final order = Get.arguments;
+    final orderId = Get.parameters['orderId'];
     return TSiteTemplate(
       desktop: OrdersDetailDesktopScreen(order: order),
     );

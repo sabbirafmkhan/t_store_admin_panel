@@ -20,20 +20,23 @@ class CartItemModel {
     this.selectedVariation,
   });
 
+  /// Calculate Total Amount
+  String get totalAmount => (price * quantity).toStringAsFixed(1);
+
   /// Empty Cart:
   static CartItemModel empty() => CartItemModel(productId: '', quantity: 0);
 
   /// Convert a CartItem to a JSON Map:
   Map<String, dynamic> toJson() {
     return {
-      "productId": productId,
-      "title": title,
-      "price": price,
-      "image": image,
-      "quantity": quantity,
-      "variationId": variationId,
-      "brandName": brandName,
-      "selectedVariation": selectedVariation,
+      'productId': productId,
+      'title': title,
+      'price': price,
+      'image': image,
+      'quantity': quantity,
+      'variationId': variationId,
+      'brandName': brandName,
+      'selectedVariation': selectedVariation,
     };
   }
 

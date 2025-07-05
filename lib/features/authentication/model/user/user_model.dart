@@ -7,7 +7,7 @@ class UserModel {
   final String? id;
   String firstName;
   String lastName;
-  String username;
+  String userName;
   String email;
   String phoneNumber;
   String profilePicture;
@@ -21,7 +21,7 @@ class UserModel {
     required this.email,
     this.firstName = '',
     this.lastName = '',
-    this.username = '',
+    this.userName = '',
     this.phoneNumber = '',
     this.profilePicture = '',
     this.role = AppRole.user,
@@ -32,27 +32,28 @@ class UserModel {
   /// Helper methods
   String get fullName => '$firstName $lastName';
 
+  String get formattedPhoneNo => TFormatter.formatPhoneNumber(phoneNumber);
+
   String get formattedDate => TFormatter.formatDate(createdAt);
 
   String get formattedUpdatedAtDate => TFormatter.formatDate(updatedAt);
 
-  String get formattedPhoneNo => TFormatter.formatPhoneNumber(phoneNumber);
-
   /// Static function to create an empty user model.
-  static UserModel empty() => UserModel(email: '');
+  static UserModel empty() =>
+      UserModel(email: ''); // Default createdAt to current time
 
   /// Convert model to JSON structure for storing data in Firebase.
   Map<String, dynamic> toJson() {
     return {
       'FirstName': firstName,
       'LastName': lastName,
-      'Username': username,
+      'UserName': userName,
       'Email': email,
       'PhoneNumber': phoneNumber,
       'ProfilePicture': profilePicture,
       'Role': role.name.toString(),
       'CreatedAt': createdAt,
-      'UpdatedAt': updatedAt ?? DateTime.now(),
+      'UpdatedAt': updatedAt = DateTime.now(),
     };
   }
 
@@ -65,7 +66,7 @@ class UserModel {
         id: document.id,
         firstName: data.containsKey('FirstName') ? data['FirstName'] ?? '' : '',
         lastName: data.containsKey('LastName') ? data['LastName'] ?? '' : '',
-        username: data.containsKey('Username') ? data['Username'] ?? '' : '',
+        userName: data.containsKey('UserName') ? data['UserName'] ?? '' : '',
         email: data.containsKey('Email') ? data['Email'] ?? '' : '',
         phoneNumber:
             data.containsKey('PhoneNumber') ? data['PhoneNumber'] ?? '' : '',
@@ -73,19 +74,19 @@ class UserModel {
             ? data['ProfilePicture'] ?? ''
             : '',
         role: data.containsKey('Role')
-            ? (data['Role'] ?? AppRole.user) == AppRole.admin.name.toString()
+            ? (data['Role'] ?? AppRole.user) == AppRole.admin.toString()
                 ? AppRole.admin
                 : AppRole.user
             : AppRole.user,
         createdAt: data.containsKey('CreatedAt')
-            ? data['CreatedAt']?.toDate() ?? DateTime.now()
+            ? (data['CreatedAt'] as Timestamp).toDate()
             : DateTime.now(),
         updatedAt: data.containsKey('UpdatedAt')
-            ? data['UpdatedAt']?.toDate() ?? DateTime.now()
+            ? (data['UpdatedAt'] as Timestamp).toDate()
             : DateTime.now(),
       ); // UserModel
     } else {
-      return empty();
+      return UserModel.empty();
     }
   }
 }

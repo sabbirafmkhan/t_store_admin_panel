@@ -9,7 +9,10 @@ import 'package:t_store_admin_panel/routes/routes.dart';
 import 'package:t_store_admin_panel/utils/constants/sizes.dart';
 
 class OrdersDetailDesktopScreen extends StatelessWidget {
-  const OrdersDetailDesktopScreen({super.key, required this.order});
+  const OrdersDetailDesktopScreen({
+    super.key,
+    required this.order,
+  });
 
   final OrderModel order;
 
@@ -30,7 +33,7 @@ class OrdersDetailDesktopScreen extends StatelessWidget {
               ),
               const SizedBox(height: TSizes.spaceBtwSections),
 
-              // Body
+              /// Body
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -48,7 +51,7 @@ class OrdersDetailDesktopScreen extends StatelessWidget {
                         const SizedBox(height: TSizes.spaceBtwSections),
 
                         // Transactions
-                        OrderTransaction(order: order),
+                        OrderTransaction(order: order)
                       ],
                     ),
                   ),
