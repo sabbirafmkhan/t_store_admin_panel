@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:t_store_admin_panel/data/repositories/authentication/authentication_repository.dart';
+import 'package:t_store_admin_panel/data/repositories/settings/settings_repository.dart';
 import 'package:t_store_admin_panel/data/repositories/user/user_repository.dart';
-import 'package:t_store_admin_panel/features/authentication/controllers/user_controller.dart';
+import 'package:t_store_admin_panel/features/personalization/controllers/user_controller.dart';
+import 'package:t_store_admin_panel/features/personalization/models/settings_model.dart';
 import 'package:t_store_admin_panel/features/personalization/models/user_model.dart';
 import 'package:t_store_admin_panel/utils/constants/enums.dart';
 import 'package:t_store_admin_panel/utils/constants/image_strings.dart';
@@ -115,6 +117,17 @@ class LoginController extends GetxController {
           email: TTexts.adminEmail,
           role: AppRole.admin,
           createdAt: DateTime.now(),
+        ),
+      );
+
+      // Create Settings record in the Firestore
+      final settingsRepository = Get.put(SettingsRepository());
+      await settingsRepository.registerSettings(
+        SettingsModel(
+          appLogo: '',
+          appName: 'My App',
+          taxRate: 0,
+          shippingCost: 0,
         ),
       );
 
