@@ -4,7 +4,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:t_store_admin_panel/data/repositories/authentication/authentication_repository.dart';
 import 'package:t_store_admin_panel/data/repositories/user/user_repository.dart';
 import 'package:t_store_admin_panel/features/authentication/controllers/user_controller.dart';
-import 'package:t_store_admin_panel/features/authentication/model/user/user_model.dart';
+import 'package:t_store_admin_panel/features/personalization/models/user_model.dart';
 import 'package:t_store_admin_panel/utils/constants/enums.dart';
 import 'package:t_store_admin_panel/utils/constants/image_strings.dart';
 import 'package:t_store_admin_panel/utils/constants/text_strings.dart';

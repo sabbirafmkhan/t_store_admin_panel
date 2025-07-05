@@ -1,8 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:t_store_admin_panel/features/personalization/models/address_model.dart';
+import 'package:t_store_admin_panel/features/shop/models/order_model.dart';
 import 'package:t_store_admin_panel/utils/constants/enums.dart';
 import 'package:t_store_admin_panel/utils/formatters/formatter.dart';
 
-/// Model class representing user data.
 class UserModel {
   final String? id;
   String firstName;
@@ -14,8 +15,9 @@ class UserModel {
   AppRole role;
   DateTime? createdAt;
   DateTime? updatedAt;
+  List<OrderModel>? orders;
+  List<AddressModel>? addresses;
 
-  /// Constructor for UserModel.
   UserModel({
     this.id,
     required this.email,
@@ -30,6 +32,7 @@ class UserModel {
   });
 
   /// Helper methods
+
   String get fullName => '$firstName $lastName';
 
   String get formattedPhoneNo => TFormatter.formatPhoneNumber(phoneNumber);
@@ -74,17 +77,17 @@ class UserModel {
             ? data['ProfilePicture'] ?? ''
             : '',
         role: data.containsKey('Role')
-            ? (data['Role'] ?? AppRole.user) == AppRole.admin.toString()
+            ? (data['Role'] ?? AppRole.user) == AppRole.admin.name.toString()
                 ? AppRole.admin
                 : AppRole.user
             : AppRole.user,
         createdAt: data.containsKey('CreatedAt')
-            ? (data['CreatedAt'] as Timestamp).toDate()
+            ? data['CreatedAt']?.toDate() ?? DateTime.now()
             : DateTime.now(),
         updatedAt: data.containsKey('UpdatedAt')
-            ? (data['UpdatedAt'] as Timestamp).toDate()
+            ? data['UpdatedAt']?.toDate() ?? DateTime.now()
             : DateTime.now(),
-      ); // UserModel
+      );
     } else {
       return UserModel.empty();
     }

@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:t_store_admin_panel/features/shop/models/address_model.dart';
+import 'package:t_store_admin_panel/features/personalization/models/address_model.dart';
 import 'package:t_store_admin_panel/features/shop/models/cart_Item_model.dart';
 import 'package:t_store_admin_panel/utils/constants/enums.dart';
 import 'package:t_store_admin_panel/utils/helpers/helper_functions.dart';

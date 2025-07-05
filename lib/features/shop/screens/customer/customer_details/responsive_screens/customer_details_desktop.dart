@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:t_store_admin_panel/common/widgets/breadcrumbs/breadcrumb_with_heading.dart';
-import 'package:t_store_admin_panel/features/authentication/model/user/user_model.dart';
+import 'package:t_store_admin_panel/features/personalization/models/user_model.dart';
+import 'package:t_store_admin_panel/features/shop/controller/customer/customer_details_controller.dart';
 import 'package:t_store_admin_panel/features/shop/screens/customer/customer_details/widgets/customer_info.dart';
 import 'package:t_store_admin_panel/features/shop/screens/customer/customer_details/widgets/customer_orders.dart';
 import 'package:t_store_admin_panel/features/shop/screens/customer/customer_details/widgets/shipping_address.dart';
@@ -14,6 +16,8 @@ class CustomerDetailsDesktopScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(CustomerDetailsController());
+    controller.customer.value = customer;
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
@@ -22,10 +26,10 @@ class CustomerDetailsDesktopScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Breadcrumbs
-              const TBreadcrumbWithHeading(
+              TBreadcrumbWithHeading(
                 returnToPreviousScreen: true,
-                heading: 'Taimoor Sikander',
-                breadcrumbItems: [TRoutes.customers, 'Details'],
+                heading: customer.fullName,
+                breadcrumbItems: const [TRoutes.customers, 'Details'],
               ),
               const SizedBox(height: TSizes.spaceBtwSections),
 

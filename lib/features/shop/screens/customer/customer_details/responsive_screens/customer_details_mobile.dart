@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:t_store_admin_panel/common/widgets/breadcrumbs/breadcrumb_with_heading.dart';
-import 'package:t_store_admin_panel/features/authentication/model/user/user_model.dart';
+import 'package:t_store_admin_panel/features/personalization/models/user_model.dart';
 import 'package:t_store_admin_panel/features/shop/screens/customer/customer_details/widgets/customer_info.dart';
 import 'package:t_store_admin_panel/features/shop/screens/customer/customer_details/widgets/customer_orders.dart';
 import 'package:t_store_admin_panel/features/shop/screens/customer/customer_details/widgets/shipping_address.dart';

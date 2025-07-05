@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:t_store_admin_panel/common/widgets/containers/rounded_container.dart';
 import 'package:t_store_admin_panel/common/widgets/images/t_rounded_image.dart';
-import 'package:t_store_admin_panel/features/authentication/model/user/user_model.dart';
+import 'package:t_store_admin_panel/features/personalization/models/user_model.dart';
 import 'package:t_store_admin_panel/utils/constants/colors.dart';
 import 'package:t_store_admin_panel/utils/constants/enums.dart';
 import 'package:t_store_admin_panel/utils/constants/image_strings.dart';
@@ -28,11 +28,15 @@ class CustomerInfo extends StatelessWidget {
           // Personal Info Card
           Row(
             children: [
-              const TRoundedImage(
+              TRoundedImage(
                 padding: 0,
                 backgroundColor: TColors.primaryBackground,
-                image: TImages.user,
-                imageType: ImageType.asset,
+                image: customer.profilePicture.isNotEmpty
+                    ? customer.profilePicture
+                    : TImages.user,
+                imageType: customer.profilePicture.isNotEmpty
+                    ? ImageType.network
+                    : ImageType.asset,
               ),
               const SizedBox(width: TSizes.spaceBtwItems),
               Expanded(
@@ -41,13 +45,13 @@ class CustomerInfo extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Coding with T',
+                      customer.fullName,
                       style: Theme.of(context).textTheme.titleLarge,
                       overflow: TextOverflow.ellipsis,
                       maxLines: 1,
                     ),
-                    const Text(
-                      'support@codingwitht.com',
+                    Text(
+                      customer.email,
                       overflow: TextOverflow.ellipsis,
                       maxLines: 1,
                     ),
@@ -67,7 +71,7 @@ class CustomerInfo extends StatelessWidget {
               const SizedBox(width: TSizes.spaceBtwItems / 2),
               Expanded(
                 child: Text(
-                  'cwt',
+                  customer.userName,
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
               ),
@@ -81,7 +85,7 @@ class CustomerInfo extends StatelessWidget {
               const SizedBox(width: TSizes.spaceBtwItems / 2),
               Expanded(
                 child: Text(
-                  'United Kingdom',
+                  'UK',
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
               ),
@@ -95,7 +99,7 @@ class CustomerInfo extends StatelessWidget {
               const SizedBox(width: TSizes.spaceBtwItems / 2),
               Expanded(
                 child: Text(
-                  '+44-7456-285429',
+                  customer.phoneNumber,
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
               ),

@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 import 'package:t_store_admin_panel/data/repositories/user/user_repository.dart';
-import 'package:t_store_admin_panel/features/authentication/model/user/user_model.dart';
+import 'package:t_store_admin_panel/features/personalization/models/user_model.dart';
 import 'package:t_store_admin_panel/features/shop/models/order_model.dart';
 import 'package:t_store_admin_panel/utils/popups/loaders.dart';
 

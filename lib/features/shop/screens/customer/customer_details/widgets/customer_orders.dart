@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:t_store_admin_panel/common/widgets/containers/rounded_container.dart';
+import 'package:t_store_admin_panel/common/widgets/loaders/animation_loader.dart';
+import 'package:t_store_admin_panel/common/widgets/loaders/loader_animation.dart';
+import 'package:t_store_admin_panel/features/shop/controller/customer/customer_details_controller.dart';
 import 'package:t_store_admin_panel/features/shop/screens/customer/customer_details/table/data_table.dart';
 import 'package:t_store_admin_panel/utils/constants/colors.dart';
+import 'package:t_store_admin_panel/utils/constants/image_strings.dart';
 import 'package:t_store_admin_panel/utils/constants/sizes.dart';
 
 class CustomerOrders extends StatelessWidget {
@@ -10,46 +15,65 @@ class CustomerOrders extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = CustomerDetailsController.instance;
+    controller.getCustomerOrders();
     return TRoundedContainer(
       padding: const EdgeInsets.all(TSizes.defaultSpace),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      child: Obx(
+        () {
+          if (controller.ordersLoading.value) return const TLoaderAnimation();
+          if (controller.allCustomerOrders.isEmpty) {
+            return TAnimationLoaderWidget(
+              text: 'No Orders Found',
+              animation: TImages.pencilAnimation,
+            );
+          }
+
+          final totalAmount = controller.allCustomerOrders.fold(0.0,
+              (previousValue, element) => previousValue + element.totalAmount);
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Orders', style: Theme.of(context).textTheme.headlineMedium),
-              Text.rich(
-                TextSpan(
-                  children: [
-                    const TextSpan(text: 'Total Spent '),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text('Orders',
+                      style: Theme.of(context).textTheme.headlineMedium),
+                  Text.rich(
                     TextSpan(
-                      text: '\$900.35',
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodyLarge!
-                          .apply(color: TColors.primary),
+                      children: [
+                        const TextSpan(text: 'Total Spent '),
+                        TextSpan(
+                          text: '\$${totalAmount.toString()}',
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyLarge!
+                              .apply(color: TColors.primary),
+                        ),
+                        TextSpan(
+                          text:
+                              ' on ${controller.allCustomerOrders.length} Orders',
+                          style: Theme.of(context).textTheme.bodyLarge,
+                        ),
+                      ],
                     ),
-                    TextSpan(
-                      text: ' on ${5} Orders',
-                      style: Theme.of(context).textTheme.bodyLarge,
-                    ),
-                  ],
+                  ),
+                ],
+              ),
+              const SizedBox(height: TSizes.spaceBtwItems),
+              TextFormField(
+                controller: controller.searchTextController,
+                onChanged: (query) => controller.searchQuery(query),
+                decoration: const InputDecoration(
+                  hintText: 'Search Orders',
+                  prefixIcon: Icon(Iconsax.search_normal),
                 ),
               ),
+              const SizedBox(height: TSizes.spaceBtwSections),
+              const CustomerOrderTable(),
             ],
-          ),
-          const SizedBox(height: TSizes.spaceBtwItems),
-          TextFormField(
-            onChanged: (query) {},
-            decoration: const InputDecoration(
-              hintText: 'Search Orders',
-              prefixIcon: Icon(Iconsax.search_normal),
-            ),
-          ),
-          const SizedBox(height: TSizes.spaceBtwSections),
-          const CustomerOrderTable(),
-        ],
+          );
+        },
       ),
     );
   }
