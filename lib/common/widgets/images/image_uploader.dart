@@ -2,6 +2,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:t_store_admin_panel/common/widgets/containers/circular_container.dart';
 
 import '../../../../../../common/widgets/icons/t_circular_icon.dart';
 import '../../../../../../common/widgets/images/t_circular_image.dart';
@@ -26,6 +27,7 @@ class TImageUploader extends StatelessWidget {
     this.bottom = 0,
     this.right,
     this.left = 0,
+    this.loading = false,
   });
 
   /// Whether to display the image in a circular shape
@@ -64,6 +66,8 @@ class TImageUploader extends StatelessWidget {
   /// Callback function for when the icon button is pressed
   final void Function()? onIconButtonPressed;
 
+  final bool loading;
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -87,19 +91,30 @@ class TImageUploader extends StatelessWidget {
                 backgroundColor: TColors.primaryBackground,
               ),
         // Display the edit icon button on top of the image
+
         Positioned(
           top: top,
           left: left,
           right: right,
           bottom: bottom,
-          child: TCircularIcon(
-            icon: icon,
-            size: TSizes.md,
-            color: Colors.white,
-            onPressed: onIconButtonPressed,
-            backgroundColor: TColors.primary.withOpacity(0.9),
-          ),
-        )
+          child: loading
+              ? const TCircularContainer(
+                  width: TSizes.xl,
+                  height: TSizes.xl,
+                  child: CircularProgressIndicator(
+                    strokeWidth: 2,
+                    backgroundColor: TColors.primary,
+                    color: Colors.white,
+                  ),
+                )
+              : TCircularIcon(
+                  icon: icon,
+                  size: TSizes.md,
+                  color: Colors.white,
+                  onPressed: onIconButtonPressed,
+                  backgroundColor: TColors.primary.withOpacity(0.9),
+                ),
+        ),
       ],
     );
   }

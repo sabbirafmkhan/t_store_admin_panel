@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:t_store_admin_panel/common/widgets/containers/rounded_container.dart';
+import 'package:t_store_admin_panel/features/personalization/controllers/user_controller.dart';
 import 'package:t_store_admin_panel/utils/constants/sizes.dart';
 import 'package:t_store_admin_panel/utils/validators/validation.dart';
 
@@ -9,20 +11,16 @@ class ProfileForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // The outermost Column of ProfileForm doesn't strictly need mainAxisSize.min
-    // because it's wrapped by an Expanded in ProfileDesktopScreen, which provides
-    // finite vertical constraints. However, applying it is generally safer for
-    // columns that aren't meant to fill all available space.
+    final controller = UserController.instance;
+    controller.firstNameController.text = controller.user.value.firstName;
+    controller.lastNameController.text = controller.user.value.firstName;
+    controller.phoneController.text = controller.user.value.firstName;
     return Column(
-      // mainAxisSize: MainAxisSize.min, // Optional, but can be good practice
       children: [
         TRoundedContainer(
           padding: const EdgeInsets.symmetric(
               vertical: TSizes.lg, horizontal: TSizes.md),
           child: Column(
-            // This Column defines the overall vertical layout within the TRoundedContainer.
-            // It should also ideally take minimum space to avoid conflicts.
-            mainAxisSize: MainAxisSize.min, // *** Crucial Fix here ***
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
@@ -32,10 +30,8 @@ class ProfileForm extends StatelessWidget {
               const SizedBox(height: TSizes.spaceBtwSections),
 
               Form(
+                key: controller.formKey,
                 child: Column(
-                  // This Column wraps the actual form fields and their spacing.
-                  // It must take minimum size to contain its children correctly.
-                  mainAxisSize: MainAxisSize.min, // *** Crucial Fix here ***
                   children: [
                     // First Name and Last Name Row
                     Row(
@@ -43,6 +39,7 @@ class ProfileForm extends StatelessWidget {
                         // First Name
                         Expanded(
                           child: TextFormField(
+                            controller: controller.firstNameController,
                             decoration: const InputDecoration(
                               hintText: 'First Name',
                               label: Text('First Name'),
@@ -59,6 +56,7 @@ class ProfileForm extends StatelessWidget {
                         // Last name
                         Expanded(
                           child: TextFormField(
+                            controller: controller.lastNameController,
                             decoration: const InputDecoration(
                               hintText: 'Last Name',
                               label: Text('Last Name'),
@@ -72,7 +70,6 @@ class ProfileForm extends StatelessWidget {
                         ),
                       ],
                     ),
-                    // *** Corrected placement of SizedBox for vertical spacing ***
                     const SizedBox(height: TSizes.spaceBtwInputFields),
 
                     // Email and Phone Row
@@ -98,6 +95,7 @@ class ProfileForm extends StatelessWidget {
                         // Phone
                         Expanded(
                           child: TextFormField(
+                            controller: controller.phoneController,
                             decoration: const InputDecoration(
                               hintText: 'Phone Number',
                               label: Text('Phone Number'),
@@ -119,11 +117,18 @@ class ProfileForm extends StatelessWidget {
               // Update Profile Button
               SizedBox(
                 width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: () {
-                    // Implement your update profile logic here
-                  },
-                  child: const Text('Update Profile'),
+                child: Obx(
+                  () => ElevatedButton(
+                    onPressed: () => controller.loading.value
+                        ? () {}
+                        : controller.updateUserInfo(),
+                    child: controller.loading.value
+                        ? const CircularProgressIndicator(
+                            color: Colors.white,
+                            strokeWidth: 2,
+                          )
+                        : const Text('Update Profile'),
+                  ),
                 ),
               ),
             ],
