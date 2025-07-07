@@ -1,72 +1,47 @@
 import 'package:get/get.dart';
-import 'package:t_store_admin_panel/features/shop/models/order_model.dart';
+import 'package:t_store_admin_panel/data/abstract/base_data_table_controller.dart';
+import 'package:t_store_admin_panel/features/shop/controller/customer/customer_controller.dart';
+import 'package:t_store_admin_panel/features/shop/controller/order/order_controller.dart';
 import 'package:t_store_admin_panel/utils/constants/enums.dart';
 import 'package:t_store_admin_panel/utils/helpers/helper_functions.dart';
 
-class DashboardController extends GetxController {
+class DashboardController extends TBaseController {
   static DashboardController get instance => Get.find();
+
+  final orderController = Get.put(OrderController());
+  final customerController = Get.put(CustomerController());
 
   /// variables
   final RxList<double> weeklySales = <double>[].obs;
   final RxMap<OrderStatus, int> orderStatusData = <OrderStatus, int>{}.obs;
   final RxMap<OrderStatus, double> totalAmounts = <OrderStatus, double>{}.obs;
 
-  /// Order
-  static final List<OrderModel> orders = [
-    OrderModel(
-      id: 'CWT0001',
-      status: OrderStatus.processing,
-      totalAmount: 256,
-      orderDate: DateTime(2025, 5, 20),
-      deliveryDate: DateTime(2025, 6, 20),
-      items: [],
-    ),
-    OrderModel(
-      id: 'CWT0002',
-      status: OrderStatus.shipped,
-      totalAmount: 200,
-      orderDate: DateTime(2025, 5, 23),
-      deliveryDate: DateTime(2025, 6, 20),
-      items: [],
-    ),
-    OrderModel(
-      id: 'CWT0003',
-      status: OrderStatus.delivered,
-      totalAmount: 369,
-      orderDate: DateTime(2025, 5, 19),
-      deliveryDate: DateTime(2025, 5, 30),
-      items: [],
-    ),
-    OrderModel(
-      id: 'CWT0004',
-      status: OrderStatus.delivered,
-      totalAmount: 240,
-      orderDate: DateTime(2025, 5, 18),
-      deliveryDate: DateTime(2025, 5, 29),
-      items: [],
-    ),
-    OrderModel(
-      id: 'CWT0005',
-      status: OrderStatus.delivered,
-      totalAmount: 135,
-      orderDate: DateTime(2025, 5, 18),
-      deliveryDate: DateTime(2025, 5, 31),
-      items: [],
-    ),
-  ];
-
   @override
-  void onInit() {
+  Future<List> fetchItems() async {
+    // Fetch Orders if empty
+    if (orderController.allItems.isEmpty) {
+      await orderController.fetchItems();
+    }
+
+    // Fetch Customers if empty
+    if (customerController.allItems.isEmpty) {
+      await customerController.fetchItems();
+    }
+
+    // calculate weekly sales:
     _calculateWeeklySales();
+
+    // calculate Order Status counts
     _calculateOrderStatusData();
-    super.onInit();
+
+    return orderController.allItems;
   }
 
   // Calculate weekly sales:
   void _calculateWeeklySales() {
     weeklySales.value = List<double>.filled(7, 0.0);
 
-    for (var order in orders) {
+    for (var order in orderController.allItems) {
       final DateTime orderWeekStart =
           THelperFunctions.getStartOfWeek(order.orderDate);
 
@@ -91,7 +66,7 @@ class DashboardController extends GetxController {
     // Map to store total amounts for each status:
     totalAmounts.value = {for (var status in OrderStatus.values) status: 0.0};
 
-    for (var order in orders) {
+    for (var order in orderController.allItems) {
       // count orders:
       final status = order.status;
       orderStatusData[status] = (orderStatusData[status] ?? 0) + 1;
@@ -118,4 +93,10 @@ class DashboardController extends GetxController {
         return 'Unknown';
     }
   }
+
+  @override
+  bool containsSearchQuery(dynamic item, String query) => false;
+
+  @override
+  Future<void> deleteItem(dynamic item) async {}
 }
